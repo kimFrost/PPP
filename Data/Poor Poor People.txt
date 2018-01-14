@@ -1,0 +1,142 @@
+
+
+Poor Poor People
+
+A game about prestige, exploiting the poor and growing your business.
+- Might as well exploit the poor. Someone else will do it if I don't anyway.
+- Grow your business with the exploit of your choosing. Slavery, union bribe, 
+
+
+- All are slimes. The rich are born "beautiful" and colorfull, and the poor are born "ugly" and colorless. 
+	This symobolism that the beautiful gets success, but for the player they are all "ugly".
+- The rich are green/rich colors
+- The poor are brown/colorless
+
+
+
+
+
+- Constructor type game?
+
+
+
+- Alliances with competitors?
+- Have to buy from competitor industries. Need wood but don't have wood.
+- The poor pay the price.
+
+
+- Factories
+- Estates
+- Politians
+- Unions
+
+- City overview
+
+
+
+
+
+
+Industries:
+- Minning
+  - Coal
+  - Iron
+    - Steel
+- Drilling
+  - Oil
+    - Petroleum 
+  - Gas
+- Electricity
+  - Coal
+  - Oil
+- Construction
+  - Bricks
+  - Wood
+	- Paper
+    - Planks
+  - Concrete
+- Weapons
+  - Guns
+  - Cannons
+  - Warships
+- Fising
+  - Fish
+  - Oyster
+- Aggriculture
+  - Corn
+  - Cattle
+	- Beef
+	- Milk
+  - Sugar
+- Import/Trade
+  - Coffee
+  - Sugar
+  - Chocolate
+- Machinary
+  - Engine
+  - Turbine
+- Chemical
+  - Rubber
+- Communications
+  - Phone
+  - Telegraph
+- Pharmacy
+  - Drugs
+- Railroad
+  - Coal
+- Lightbulb
+- Clothing
+  - Textile
+- Transport
+  - Bicycles
+  - Automobile
+  - Tubes
+  - Trains
+
+- Science (Benefits for all other industries)
+  - Fertilizer (Aggriculture)
+
+- Sanitation
+
+
+
+Explore slime idea:
+- How are slimes born?
+- What do slimes eat?
+- Transport tubes for slimes
+
+
+
+o Statue/Momument
+  - Person look at
+  - Bonus
+o Factory exit sensor
+o Pub
+o Item over Person
+o Perspective
+
+
+- Road
+  - Direction arrow
+  
+- Person
+  - Add move input
+  - Move x pixels along road if on road
+  - Syncronize movent?
+  
+  
+  
+  
+- Color passes for gates
+  - Sort people in junctions based on color passes. Set on residence
+
+
+
+
+https://www.youtube.com/watch?v=moW8-MXjivs
+
+
+https://learningenglish.voanews.com/a/a-23-2005-11-09-voa2-83127042/125125.html
+http://www.loc.gov/teachers/classroommaterials/presentationsandactivities/presentations/timeline/riseind/work/
+http://www.loc.gov/teachers/classroommaterials/presentationsandactivities/presentations/timeline/riseind/city/
+http://jordancdrake.blogspot.dk/
