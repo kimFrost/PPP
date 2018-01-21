@@ -14,6 +14,7 @@ const TArray<FVector> Directions = {
 FVector UTilesLibrary::DirectionToLocation(int32 Direction)
 {
 	Direction = Direction % Directions.Num();
+
 	if (Direction < 0) Direction = 0;
 	return Directions[Direction] * 50;
 }
