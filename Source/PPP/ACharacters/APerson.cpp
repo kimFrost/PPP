@@ -22,7 +22,8 @@ void APerson::BeginPlay()
 void APerson::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+	//GetActorForwardVector()
+	//AddMovementInput(GetActorForwardVector(), 1);
 }
 
 // Called to bind functionality to input
