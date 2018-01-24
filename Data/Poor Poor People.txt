@@ -144,3 +144,8 @@ http://jordancdrake.blogspot.dk/
 
 https://boardgamegeek.com/image/1660506/euphoria-build-better-dystopia?size=large
 
+
+// Vertex animation
+https://www.youtube.com/watch?v=oZZFr6MxjXU
+
+https://forums.unrealengine.com/development-discussion/animation/63849-single-instance-of-animation-blueprint-to-controll-multiple-skeleton-meshes
