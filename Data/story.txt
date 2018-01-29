@@ -1,0 +1,81 @@
+
+
+- EQS
+
+
+- Actor manager of primitive components to move around
+
+
+
+
+
+- Continuous spawning or Spawning in shifts/dawn
+
+
+Continuous: 
+Spawn at intervals, moves the streets and go to the first work they come accros.
+
+
+
+Shifts:
+All spawn at the same time, moves though the streets and going to the first work they find.
+After work, then navigation home? or find entertainment (pub) and then go home. Navigation?
+Day report on produced goods, income, casualties etc.
+
+
+
+Hazards:
+potholes (people fall down in them)
+
+
+
+
+A man stressed beyound limit, goes to a vending machine to get his daily anti-depression. 
+He strucgles to function just barely, and hope is almost a forbidden word to him.
+He continues oneward to the factory, where he will spent his next 14 hours, earning him just enough money to feed his starving family.
+After his shifts ends, his mind is heavy. A dear friend lost his life today. Another one caught in the great wheels of the machine.
+He drags himself through the streets towards home. He stop at the sound of music to his right. 
+A pub. Through the mudgreen glass he can see people sitting at the bar. He pulls his hand into his pocket, and feels the cold coins lying there.
+Glimpes of his friend raises though his head. Too much to handle, like knifes in his stomach. He goes into the bar.
+He thinks of his starving family. He feels powerless and alone. 
+
+
+Underground district
+
+
+
+Loop of suppresing symtoms.
+
+Stages:
+Worker is tired from working => Coffe, energy drink, 
+
+
+Working is slowly killing us. But instead of stopping, we only focus on supressing our fatigue with stimulents.
+Skinner boxes for dopamin fix
+Antidepressiv 
+Beer for joy "boost"
+
+
+
+
+
+
+Underground resistance (anti imperialists)
+
+
+
+
+- Floodfill from house to nearest factory
+- Route to factory and home
+- Factory que
+- Wounds, depression, cards
+o Character no character collision
+
+o Standard structure blocks for test 1x1 2x2 3x3 4x4
+	- Title label on top
+
+
+
+
+
+
