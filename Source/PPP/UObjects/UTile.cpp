@@ -10,6 +10,8 @@ UTile::UTile()
 	WorldLocation = FVector(0, 0, 0);
 	Manager = nullptr;
 	AdjacentTiles = TArray<UTile*>();
+	RoadOnTile = nullptr;
+	StructureOnTile = nullptr;
 }
 
 UTile::~UTile()

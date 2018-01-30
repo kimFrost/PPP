@@ -9,6 +9,8 @@
 
 //~~~~~ Forward Declarations ~~~~~//
 class UTileManager;
+class ARoad;
+class AStructure;
 
 UCLASS(Blueprintable, BlueprintType)
 class PPP_API UTile : public UObject
@@ -36,6 +38,14 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Grid")
 	TArray<UTile*> AdjacentTiles;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Grid")
+	ARoad* RoadOnTile;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Grid")
+	AStructure* StructureOnTile;
+
+
 
 private:
 

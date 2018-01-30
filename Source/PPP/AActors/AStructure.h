@@ -6,6 +6,13 @@
 #include "GameFramework/Actor.h"
 #include "AStructure.generated.h"
 
+
+
+//~~~~~ Forward Declarations ~~~~~//
+class UTile;
+class ARoad;
+
+
 UCLASS()
 class PPP_API AStructure : public AActor
 {
@@ -14,6 +21,26 @@ class PPP_API AStructure : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AStructure();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Structure")
+	bool bFloodFill;
+
+	TArray<UTile*> TilesOn;
+
+	UTile* TileEnterance;
+
+	UTile* TileExit;
+
+
+	// Route TArray<ARoad*>
+
+	//UClass*
+	//TSubclassOf
+	//TSubobjectPtr
+	void GetRouteToClosetOfClass(int32 MaxRange, TSubclassOf<class AStructure> StructureClass);
+
+	void Init();
+
 
 protected:
 	// Called when the game starts or when spawned

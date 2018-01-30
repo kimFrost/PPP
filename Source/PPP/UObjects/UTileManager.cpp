@@ -2,7 +2,15 @@
 
 #include "UTileManager.h"
 #include "UObjects/UTile.h"
+#include "Libraries/UTilesLibrary.h"
 
+
+const TArray<FVector> TileDirections = {
+	FVector(0, -1, 0),
+	FVector(1, 0, 0),
+	FVector(0, 1, 0),
+	FVector(-1, 0, 0)
+};
 
 UTileManager::UTileManager()
 {
@@ -34,6 +42,26 @@ void UTileManager::CreateTiles()
 			}
 		}
 	}
+
+	//~~ Set Adjacent tiles in each tile ~~//
+	for (auto& Tile : Tiles)
+	{
+		if (Tile)
+		{
+			for (auto& Direction : TileDirections)
+			{
+				UTile* NeighbourTile = CoordinatesToTile(Tile->X + Direction.X, Tile->Y + Direction.Y);
+				if (NeighbourTile && NeighbourTile != Tile)
+				{
+					Tile->AdjacentTiles.Add(NeighbourTile);
+				}
+				else {
+					Tile->AdjacentTiles.Add(nullptr);
+				}
+			}
+		}
+	}
+
 }
 
 UTile* UTileManager::CoordinatesToTile(int32 X, int32 Y)
