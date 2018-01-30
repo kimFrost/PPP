@@ -39,10 +39,10 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Grid")
 	TArray<UTile*> AdjacentTiles;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Grid")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Grid")
 	ARoad* RoadOnTile;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Grid")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Grid")
 	AStructure* StructureOnTile;
 
 

@@ -50,7 +50,7 @@ void UTileManager::CreateTiles()
 		{
 			for (auto& Direction : TileDirections)
 			{
-				UTile* NeighbourTile = CoordinatesToTile(Tile->X + Direction.X, Tile->Y + Direction.Y);
+				UTile* NeighbourTile = CoordinatesToTile(Tile->X + Direction.X, Tile->Y + Direction.Y, false);
 				if (NeighbourTile && NeighbourTile != Tile)
 				{
 					Tile->AdjacentTiles.Add(NeighbourTile);
@@ -64,12 +64,21 @@ void UTileManager::CreateTiles()
 
 }
 
-UTile* UTileManager::CoordinatesToTile(int32 X, int32 Y)
+UTile* UTileManager::CoordinatesToTile(int32 X, int32 Y, bool Clamp = true)
 {
-	int32 _X = FMath::Clamp(X, 0, CountX);
-	int32 _Y = FMath::Clamp(Y, 0, CountY);
+	int32 _X = X;
+	int32 _Y = Y;
+	if (Clamp)
+	{
+		_X = FMath::Clamp(X, 0, CountX - 1);
+		_Y = FMath::Clamp(Y, 0, CountY - 1);
+	}
 	int32 Index = _X + _Y * CountX;
-	return Tiles[Index];
+	if (Tiles.IsValidIndex(Index))
+	{
+		return Tiles[Index];
+	}
+	return nullptr;
 }
 
 UTile* UTileManager::WorldLocationToTile(FVector WorldLocation)

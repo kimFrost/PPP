@@ -25,20 +25,25 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Structure")
 	bool bFloodFill;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Structure")
 	TArray<UTile*> TilesOn;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Structure")
 	UTile* TileEnterance;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Structure")
 	UTile* TileExit;
 
-
-	// Route TArray<ARoad*>
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Structure")
+	TArray<ARoad*> CurrentRoute;
 
 	//UClass*
 	//TSubclassOf
 	//TSubobjectPtr
-	void GetRouteToClosetOfClass(int32 MaxRange, TSubclassOf<class AStructure> StructureClass);
+	UFUNCTION(BlueprintCallable, Category = "Structure")
+	TArray<ARoad*> GetRouteToClosetOfClass(int32 MaxRange, TSubclassOf<class AStructure> StructureClass);
 
+	UFUNCTION(BlueprintCallable, Category = "Structure")
 	void Init();
 
 

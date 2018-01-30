@@ -17,7 +17,7 @@ AStructure::AStructure()
 	bFloodFill = false;
 }
 
-void AStructure::GetRouteToClosetOfClass(int32 MaxRange, TSubclassOf<class AStructure> StructureClass)
+TArray<ARoad*> AStructure::GetRouteToClosetOfClass(int32 MaxRange, TSubclassOf<class AStructure> StructureClass)
 {
 	const TArray<FVector> Directions = {
 		FVector(0, -1, 0),
@@ -62,6 +62,27 @@ void AStructure::GetRouteToClosetOfClass(int32 MaxRange, TSubclassOf<class AStru
 						{
 							// Found closes target of class
 							// Reverse loop though tile path and check if they exist in visitedRoads
+							Route.Push(Road);
+							ARoad* CurrentRoad = Road;
+							for (int32 vK = k; vK >= 0; vK--)
+							{
+								TArray<ARoad*>& PrevFrontier = Frontiers[vK];
+								for (auto& PrevRoad : PrevFrontier)
+								{
+									if (PrevRoad && PrevRoad->Paths.Contains(CurrentRoad))
+									{
+										Route.Push(PrevRoad);
+										CurrentRoad = PrevRoad;
+										continue;
+									}
+								}
+							}
+
+							//[0, 1, 2, 3, 4, 5, 6]
+							//[x, x, x, x, x, x, x]
+							//[ , x, x, x, x, x, o]
+							//[ ,  ,  , x,  , x, x]
+							//[ ,  ,  ,  ,  , x, x]
 
 							/*
 							for (auto& Path : VisitedRoads)
@@ -69,7 +90,7 @@ void AStructure::GetRouteToClosetOfClass(int32 MaxRange, TSubclassOf<class AStru
 								Route.Push(Path);
 							}
 							*/
-							return;
+							return Route;
 						}
 						else
 						{
@@ -95,6 +116,7 @@ void AStructure::GetRouteToClosetOfClass(int32 MaxRange, TSubclassOf<class AStru
 
 
 	}
+	return Route;
 }
 
 void AStructure::Init()

@@ -20,15 +20,24 @@ public:
 	// Sets default values for this actor's properties
 	ARoad();
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Road")
 	UTile* TileOn;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Road")
 	bool bIsOneWay;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Road")
 	int32 OneWayDirection;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Road")
 	TArray<ARoad*> Paths;
 
 	TArray<ARoad*> Neighbours;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Road")
 	TArray<AStructure*> Entrances;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Road")
 	TArray<AStructure*> Exits;
 
 	void AddEntrance(AStructure* Structure);
@@ -37,6 +46,7 @@ public:
 
 	bool HasEntranceOfClass(TSubclassOf<class AStructure> StructureClass);
 
+	UFUNCTION(BlueprintCallable, Category = "Road")
 	void UpdatePaths();
 
 
