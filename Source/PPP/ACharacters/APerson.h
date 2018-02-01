@@ -6,6 +6,12 @@
 #include "GameFramework/Character.h"
 #include "APerson.generated.h"
 
+
+//~~~~~ Forward Declarations ~~~~~//
+class UTileManager;
+class ARoad;
+
+
 UCLASS()
 class PPP_API APerson : public ACharacter
 {
@@ -14,6 +20,12 @@ class PPP_API APerson : public ACharacter
 public:
 	// Sets default values for this character's properties
 	APerson();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Person", Meta = (ExposeOnSpawn = true))
+	UTileManager* TileManager;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Person", Meta = (ExposeOnSpawn = true))
+	TArray<ARoad*> CurrentRoute;
 
 protected:
 	// Called when the game starts or when spawned
