@@ -15,6 +15,11 @@ URoadMovementComponent::URoadMovementComponent()
 	RoadOn = nullptr;
 	NextTargetRoad = nullptr;
 	UpdatedComponent = nullptr;
+
+	bWantsInitializeComponent = true;
+
+	MovementSpeed = 1.f;
+	bIsMoving = true;
 }
 
 
@@ -28,14 +33,44 @@ bool URoadMovementComponent::MoveUpdatedComponentImpl(const FVector& Delta, cons
 
 	return false;
 }
+void URoadMovementComponent::SetRoute(TArray<ARoad*> NewRoute)
+{
+	CurrentRoute = NewRoute;
+	if (CurrentRoute.IsValidIndex(0))
+	{
+		NextTargetRoad = CurrentRoute[0];
+	}
+}
 
 //~~ Virtual functions ~~//
+void URoadMovementComponent::SetUpdatedComponent(USceneComponent* NewUpdatedComponent)
+{
+	// Don't assign pending kill components, but allow those to null out previous UpdatedComponent.
+	UpdatedComponent = IsValid(NewUpdatedComponent) ? NewUpdatedComponent : NULL;
+}
+void URoadMovementComponent::InitializeComponent()
+{
+	TGuardValue<bool> InInitializeComponentGuard(bInInitializeComponent, true);
+	Super::InitializeComponent();
+
+	// RootComponent is null in OnRegister for blueprint (non-native) root components.
+	if (!UpdatedComponent)
+	{
+		// Auto-register owner's root component if found.
+		if (AActor* MyActor = GetOwner())
+		{
+			if (USceneComponent* NewUpdatedComponent = MyActor->GetRootComponent())
+			{
+				SetUpdatedComponent(NewUpdatedComponent);
+			}
+		}
+	}
+}
+
 void URoadMovementComponent::BeginPlay()
 {
 	Super::BeginPlay();
-
-	//Get root scene component 
-	//UpdatedComponent = 
+	
 	
 }
 void URoadMovementComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
@@ -44,20 +79,58 @@ void URoadMovementComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 
 	if (UpdatedComponent)
 	{
-		const FVector& ForwardVector = UpdatedComponent->GetForwardVector();
-		const FQuat& NewRotationQuat = UpdatedComponent->GetComponentQuat();
-		const FVector& NewDelta = ForwardVector * 10;
-		//FHitResult* OutHit = nullptr;
+		if (NextTargetRoad)
+		{
+			FVector RoadLocation = NextTargetRoad->GetActorLocation();
+			FVector ComponentLocation = UpdatedComponent->GetComponentLocation();
+			if ((RoadLocation - ComponentLocation).Size() < MovementSpeed)
+			{
+				// Set new NextTargetRoad
+				int32 CurrentIndex = CurrentRoute.IndexOfByKey(NextTargetRoad);
+				if (CurrentRoute.IsValidIndex(CurrentIndex + 1))
+				{
+					NextTargetRoad = CurrentRoute[CurrentIndex + 1];
+				}
+				else if (CurrentRoute.Last() == NextTargetRoad) 
+				{
+					// At end
+					//bIsMoving = false;
+					//NextTargetRoad = nullptr;
+					NextTargetRoad = CurrentRoute[0];
+				}
+			}
+			// Set Rotation of UpdatedComponent to face NextTargetRoad
+			FVector LookVector = (RoadLocation - ComponentLocation).GetSafeNormal();
+			UpdatedComponent->SetWorldRotation(LookVector.Rotation());
 
-		UpdatedComponent->MoveComponent(NewDelta, NewRotationQuat, false, nullptr, EMoveComponentFlags::MOVECOMP_NoFlags, ETeleportType::TeleportPhysics);
+			bIsMoving = true;
+		}
+		else
+		{
+			bIsMoving = false;
+		}
+		if (bIsMoving)
+		{
+			const FVector& ForwardVector = UpdatedComponent->GetForwardVector();
+			const FQuat& NewRotationQuat = UpdatedComponent->GetComponentQuat();
+			const FVector& NewDelta = ForwardVector * MovementSpeed;
+			//FHitResult* OutHit = nullptr;
 
-		//
-		//const FVector Adjustment = FVector::VectorPlaneProject(DeltaTime, Normal) * Time;
+			UpdatedComponent->MoveComponent(NewDelta, NewRotationQuat, false, nullptr, EMoveComponentFlags::MOVECOMP_NoFlags, ETeleportType::TeleportPhysics);
+			//UpdatedComponent->ComponentVelocity = FVector(100, 0, 0);
 
-		// Move without sweeping.
-		//MoveUpdatedComponent(Adjustment, NewRotationQuat, false, nullptr, ETeleportType::TeleportPhysics);
+			//
+			//const FVector Adjustment = FVector::VectorPlaneProject(DeltaTime, Normal) * Time;
 
-		//bool bMoved = MoveUpdatedComponent(Adjustment, NewRotationQuat, true, &SweepOutHit, ETeleportType::TeleportPhysics);
+			// Move without sweeping.
+			//MoveUpdatedComponent(Adjustment, NewRotationQuat, false, nullptr, ETeleportType::TeleportPhysics);
+
+			//bool bMoved = MoveUpdatedComponent(Adjustment, NewRotationQuat, true, &SweepOutHit, ETeleportType::TeleportPhysics);
+		}
+		else
+		{
+			UpdatedComponent->ComponentVelocity = FVector::ZeroVector;
+		}
 	}
 	
 

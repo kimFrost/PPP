@@ -71,7 +71,7 @@ TArray<ARoad*> AStructure::GetRouteToClosetOfClass(int32 MaxRange, TSubclassOf<c
 								{
 									if (PrevRoad && PrevRoad->Paths.Contains(CurrentRoad))
 									{
-										Route.Push(PrevRoad);
+										Route.Insert(PrevRoad, 0);
 										CurrentRoad = PrevRoad;
 										continue;
 									}

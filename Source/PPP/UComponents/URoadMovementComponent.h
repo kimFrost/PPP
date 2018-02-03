@@ -21,6 +21,7 @@ public:
 	// Sets default values for this component's properties
 	URoadMovementComponent();
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement", Meta = (ExposeOnSpawn = true))
 	UTileManager* TileManager;
 
 	ARoad* RoadOn;
@@ -29,18 +30,28 @@ public:
 
 	USceneComponent* UpdatedComponent;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement", Meta = (ExposeOnSpawn = true))
 	TArray<ARoad*> CurrentRoute;
 
 	float MovementSpeed;
 
 	float Velocity;
 
-	//GetRoute
+	bool bIsMoving;
 
+	UFUNCTION(BlueprintCallable, Category = "Components|Movement")
+	void SetRoute(TArray<ARoad*> NewRoute);
+
+	UFUNCTION(BlueprintCallable, Category = "Components|Movement")
+	virtual void SetUpdatedComponent(USceneComponent* NewUpdatedComponent);
 
 protected:
 
+	bool bInInitializeComponent;
+
 	virtual bool MoveUpdatedComponentImpl(const FVector& Delta, const FQuat& NewRotation, bool bSweep, FHitResult* OutHit = NULL, ETeleportType Teleport = ETeleportType::None);
+
+	virtual void InitializeComponent() override;
 
 	virtual void BeginPlay() override;
 

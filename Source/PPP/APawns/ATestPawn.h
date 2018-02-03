@@ -4,28 +4,16 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
-#include "APerson.generated.h"
-
-
-//~~~~~ Forward Declarations ~~~~~//
-class UTileManager;
-class ARoad;
-
+#include "ATestPawn.generated.h"
 
 UCLASS()
-class PPP_API APerson : public APawn
+class PPP_API AATestPawn : public APawn
 {
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this character's properties
-	APerson();
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Person", Meta = (ExposeOnSpawn = true))
-	UTileManager* TileManager;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Person", Meta = (ExposeOnSpawn = true))
-	TArray<ARoad*> CurrentRoute;
+	// Sets default values for this pawn's properties
+	AATestPawn();
 
 protected:
 	// Called when the game starts or when spawned
