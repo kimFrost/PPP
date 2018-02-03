@@ -11,6 +11,10 @@ URoadMovementComponent::URoadMovementComponent()
 {
 	PrimaryComponentTick.bCanEverTick = true;
 
+	TileManager = nullptr;
+	RoadOn = nullptr;
+	NextTargetRoad = nullptr;
+	UpdatedComponent = nullptr;
 }
 
 
@@ -25,10 +29,13 @@ bool URoadMovementComponent::MoveUpdatedComponentImpl(const FVector& Delta, cons
 	return false;
 }
 
-
+//~~ Virtual functions ~~//
 void URoadMovementComponent::BeginPlay()
 {
 	Super::BeginPlay();
+
+	//Get root scene component 
+	//UpdatedComponent = 
 	
 }
 void URoadMovementComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
@@ -37,11 +44,18 @@ void URoadMovementComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 
 	if (UpdatedComponent)
 	{
-		const FQuat NewRotationQuat = UpdatedComponent->GetComponentQuat();
-		const FVector Adjustment = FVector::VectorPlaneProject(DeltaTime, Normal) * Time;
+		const FVector& ForwardVector = UpdatedComponent->GetForwardVector();
+		const FQuat& NewRotationQuat = UpdatedComponent->GetComponentQuat();
+		const FVector& NewDelta = ForwardVector * 10;
+		//FHitResult* OutHit = nullptr;
+
+		UpdatedComponent->MoveComponent(NewDelta, NewRotationQuat, false, nullptr, EMoveComponentFlags::MOVECOMP_NoFlags, ETeleportType::TeleportPhysics);
+
+		//
+		//const FVector Adjustment = FVector::VectorPlaneProject(DeltaTime, Normal) * Time;
 
 		// Move without sweeping.
-		MoveUpdatedComponent(Adjustment, NewRotationQuat, false, nullptr, ETeleportType::TeleportPhysics);
+		//MoveUpdatedComponent(Adjustment, NewRotationQuat, false, nullptr, ETeleportType::TeleportPhysics);
 
 		//bool bMoved = MoveUpdatedComponent(Adjustment, NewRotationQuat, true, &SweepOutHit, ETeleportType::TeleportPhysics);
 	}

@@ -31,6 +31,10 @@ public:
 
 	TArray<ARoad*> CurrentRoute;
 
+	float MovementSpeed;
+
+	float Velocity;
+
 	//GetRoute
 
 
