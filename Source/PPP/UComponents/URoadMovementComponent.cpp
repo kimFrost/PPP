@@ -2,6 +2,7 @@
 
 #include "URoadMovementComponent.h"
 #include "AActors/ARoad.h"
+#include "AActors/AStructure.h"
 #include "UObjects/UTile.h"
 #include "UObjects/UTileManager.h"
 #include "Libraries/UTilesLibrary.h"
@@ -83,13 +84,24 @@ void URoadMovementComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 		{
 			FVector RoadLocation = NextTargetRoad->GetActorLocation();
 			FVector ComponentLocation = UpdatedComponent->GetComponentLocation();
+			//~~ Within frame distance of  NextTargetRoad ~~//
 			if ((RoadLocation - ComponentLocation).Size() < MovementSpeed)
 			{
-				// Set new NextTargetRoad
+				RoadOn = NextTargetRoad;
+				for (auto& Entrance : RoadOn->Entrances)
+				{
+					if (Entrance)
+					{
+						// parse entraces
+						// If factory
+
+
+					}
+				}
 				int32 CurrentIndex = CurrentRoute.IndexOfByKey(NextTargetRoad);
 				if (CurrentRoute.IsValidIndex(CurrentIndex + 1))
 				{
-					NextTargetRoad = CurrentRoute[CurrentIndex + 1];
+					NextTargetRoad = CurrentRoute[CurrentIndex + 1]; // Set next target road
 				}
 				else if (CurrentRoute.Last() == NextTargetRoad) 
 				{
@@ -117,7 +129,7 @@ void URoadMovementComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 			//FHitResult* OutHit = nullptr;
 
 			UpdatedComponent->MoveComponent(NewDelta, NewRotationQuat, false, nullptr, EMoveComponentFlags::MOVECOMP_NoFlags, ETeleportType::TeleportPhysics);
-			//UpdatedComponent->ComponentVelocity = FVector(100, 0, 0);
+			UpdatedComponent->ComponentVelocity = FVector(100, 0, 0);
 
 			//
 			//const FVector Adjustment = FVector::VectorPlaneProject(DeltaTime, Normal) * Time;

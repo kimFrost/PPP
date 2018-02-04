@@ -28,6 +28,8 @@ public:
 
 	ARoad* NextTargetRoad;
 
+	FVector TargetLocation;
+
 	USceneComponent* UpdatedComponent;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement", Meta = (ExposeOnSpawn = true))

@@ -40,6 +40,7 @@ TArray<ARoad*> AStructure::GetRouteToClosetOfClass(int32 MaxRange, TSubclassOf<c
 	TArray<ARoad*> VisitedRoads;
 	TArray<TArray<ARoad*>> Frontiers;
 
+
 	if (TileExit)
 	{
 		if (TileExit->RoadOnTile)
@@ -62,6 +63,7 @@ TArray<ARoad*> AStructure::GetRouteToClosetOfClass(int32 MaxRange, TSubclassOf<c
 						{
 							// Found closes target of class
 							// Reverse loop though tile path and check if they exist in visitedRoads
+							bool bAnyOnewayInRoute = false;
 							Route.Push(Road);
 							ARoad* CurrentRoad = Road;
 							for (int32 vK = k; vK >= 0; vK--)
@@ -71,11 +73,28 @@ TArray<ARoad*> AStructure::GetRouteToClosetOfClass(int32 MaxRange, TSubclassOf<c
 								{
 									if (PrevRoad && PrevRoad->Paths.Contains(CurrentRoad))
 									{
+										// If PrevRoad is oneway then set bAnyOnewayInRoute to true
 										Route.Insert(PrevRoad, 0);
 										CurrentRoad = PrevRoad;
 										continue;
 									}
 								}
+							}
+
+							if (bAnyOnewayInRoute)
+							{
+								// Trace new back route
+
+							}
+							else
+							{
+								// Use same route back
+								TArray<ARoad*> RouteBack;
+								for (int32 vI = Route.Num() - 2; vI >= 0; vI--)
+								{
+									RouteBack.Add(Route[vI]);
+								}
+								Route.Append(RouteBack);
 							}
 
 							//[0, 1, 2, 3, 4, 5, 6]
