@@ -19,7 +19,7 @@ URoadMovementComponent::URoadMovementComponent()
 
 	bWantsInitializeComponent = true;
 
-	MovementSpeed = 1.f;
+	MovementSpeed = 100.f;
 	bIsMoving = true;
 }
 
@@ -40,6 +40,7 @@ void URoadMovementComponent::SetRoute(TArray<ARoad*> NewRoute)
 	if (CurrentRoute.IsValidIndex(0))
 	{
 		NextTargetRoad = CurrentRoute[0];
+		CurrentRouteIndex = 0;
 	}
 }
 
@@ -85,7 +86,7 @@ void URoadMovementComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 			FVector RoadLocation = NextTargetRoad->GetActorLocation();
 			FVector ComponentLocation = UpdatedComponent->GetComponentLocation();
 			//~~ Within frame distance of  NextTargetRoad ~~//
-			if ((RoadLocation - ComponentLocation).Size() < MovementSpeed)
+			if ((RoadLocation - ComponentLocation).Size() < MovementSpeed * DeltaTime) //TODO: Missing using DeltaTime
 			{
 				RoadOn = NextTargetRoad;
 				for (auto& Entrance : RoadOn->Entrances)
@@ -93,15 +94,19 @@ void URoadMovementComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 					if (Entrance)
 					{
 						// parse entraces
+
+						// Check if go into and come back after a while and resume route
+
 						// If factory
 
 
 					}
 				}
-				int32 CurrentIndex = CurrentRoute.IndexOfByKey(NextTargetRoad);
-				if (CurrentRoute.IsValidIndex(CurrentIndex + 1))
+				//int32 CurrentIndex = CurrentRoute.IndexOfByKey(NextTargetRoad);
+				if (CurrentRoute.IsValidIndex(CurrentRouteIndex + 1))
 				{
-					NextTargetRoad = CurrentRoute[CurrentIndex + 1]; // Set next target road
+					NextTargetRoad = CurrentRoute[CurrentRouteIndex + 1]; // Set next target road
+					CurrentRouteIndex++;
 				}
 				else if (CurrentRoute.Last() == NextTargetRoad) 
 				{
@@ -109,6 +114,7 @@ void URoadMovementComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 					//bIsMoving = false;
 					//NextTargetRoad = nullptr;
 					NextTargetRoad = CurrentRoute[0];
+					CurrentRouteIndex = 0;
 				}
 			}
 			// Set Rotation of UpdatedComponent to face NextTargetRoad
@@ -125,7 +131,7 @@ void URoadMovementComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 		{
 			const FVector& ForwardVector = UpdatedComponent->GetForwardVector();
 			const FQuat& NewRotationQuat = UpdatedComponent->GetComponentQuat();
-			const FVector& NewDelta = ForwardVector * MovementSpeed;
+			const FVector& NewDelta = ForwardVector * MovementSpeed * DeltaTime; //TODO: Missing using DeltaTime
 			//FHitResult* OutHit = nullptr;
 
 			UpdatedComponent->MoveComponent(NewDelta, NewRotationQuat, false, nullptr, EMoveComponentFlags::MOVECOMP_NoFlags, ETeleportType::TeleportPhysics);

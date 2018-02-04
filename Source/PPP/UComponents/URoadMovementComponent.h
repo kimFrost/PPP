@@ -41,6 +41,8 @@ public:
 
 	bool bIsMoving;
 
+	int32 CurrentRouteIndex;
+
 	UFUNCTION(BlueprintCallable, Category = "Components|Movement")
 	void SetRoute(TArray<ARoad*> NewRoute);
 
