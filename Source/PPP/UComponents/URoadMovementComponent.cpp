@@ -93,6 +93,9 @@ void URoadMovementComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 				{
 					if (Entrance)
 					{
+						//
+
+
 						// parse entraces
 
 						// Check if go into and come back after a while and resume route
