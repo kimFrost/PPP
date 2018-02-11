@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "APerson.h"
+#include "AActors/AStructure.h"
 
 
 // Sets default values
@@ -9,6 +10,7 @@ APerson::APerson()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
 
+	bHasWorked = false;
 }
 
 // Called when the game starts or when spawned
@@ -33,3 +35,15 @@ void APerson::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 }
 
+/*
+bool APerson::RespondToEntrance(AStructure* Entrance) const
+{
+	return false;
+}
+*/
+
+
+bool APerson::RespondToEntrance_Implementation(AStructure* Entrance)
+{
+	return false;
+}

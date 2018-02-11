@@ -9,6 +9,7 @@
 
 //~~~~~ Forward Declarations ~~~~~//
 class UTileManager;
+class APerson;
 class ARoad;
 
 
@@ -31,6 +32,8 @@ public:
 	FVector TargetLocation;
 
 	USceneComponent* UpdatedComponent;
+
+	APerson* UpdatedPerson;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement", Meta = (ExposeOnSpawn = true))
 	TArray<ARoad*> CurrentRoute;

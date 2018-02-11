@@ -3,6 +3,7 @@
 #include "URoadMovementComponent.h"
 #include "AActors/ARoad.h"
 #include "AActors/AStructure.h"
+#include "ACharacters/APerson.h"
 #include "UObjects/UTile.h"
 #include "UObjects/UTileManager.h"
 #include "Libraries/UTilesLibrary.h"
@@ -16,6 +17,7 @@ URoadMovementComponent::URoadMovementComponent()
 	RoadOn = nullptr;
 	NextTargetRoad = nullptr;
 	UpdatedComponent = nullptr;
+	UpdatedPerson = nullptr;
 
 	bWantsInitializeComponent = true;
 
@@ -49,6 +51,10 @@ void URoadMovementComponent::SetUpdatedComponent(USceneComponent* NewUpdatedComp
 {
 	// Don't assign pending kill components, but allow those to null out previous UpdatedComponent.
 	UpdatedComponent = IsValid(NewUpdatedComponent) ? NewUpdatedComponent : NULL;
+	if (UpdatedComponent)
+	{
+		UpdatedPerson = Cast<APerson>(UpdatedComponent->GetOwner());
+	}
 }
 void URoadMovementComponent::InitializeComponent()
 {
@@ -89,20 +95,26 @@ void URoadMovementComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 			if ((RoadLocation - ComponentLocation).Size() < MovementSpeed * DeltaTime) //TODO: Missing using DeltaTime
 			{
 				RoadOn = NextTargetRoad;
-				for (auto& Entrance : RoadOn->Entrances)
+				if (UpdatedPerson)
 				{
-					if (Entrance)
+					for (auto& Entrance : RoadOn->Entrances)
 					{
-						//
+						if (Entrance)
+						{
+							bool bGoIn = UpdatedPerson->RespondToEntrance(Entrance);
+							if (bGoIn)
+							{
+								bIsMoving = false;
+								return;
+							}
+							// parse entraces
+
+							// Check if go into and come back after a while and resume route
+
+							// If factory
 
 
-						// parse entraces
-
-						// Check if go into and come back after a while and resume route
-
-						// If factory
-
-
+						}
 					}
 				}
 				//int32 CurrentIndex = CurrentRoute.IndexOfByKey(NextTargetRoad);
