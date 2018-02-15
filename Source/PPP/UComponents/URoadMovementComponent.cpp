@@ -97,7 +97,7 @@ void URoadMovementComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 				RoadOn = NextTargetRoad;
 				if (UpdatedPerson)
 				{
-					for (auto& Entrance : RoadOn->Entrances)
+					for (auto& Entrance : RoadOn->Entrances) // Output list instead. Look for input output match
 					{
 						if (Entrance)
 						{
@@ -105,6 +105,7 @@ void URoadMovementComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 							if (bGoIn)
 							{
 								bIsMoving = false;
+								TargetLocation = Entrance->GetActorLocation();
 								return;
 							}
 							// parse entraces
