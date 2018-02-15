@@ -16,12 +16,14 @@ URoadMovementComponent::URoadMovementComponent()
 	TileManager = nullptr;
 	RoadOn = nullptr;
 	NextTargetRoad = nullptr;
+	TargetStructure = nullptr;
 	UpdatedComponent = nullptr;
 	UpdatedPerson = nullptr;
 
 	bWantsInitializeComponent = true;
 
 	MovementSpeed = 100.f;
+	bInRoadNavigation = false;
 	bIsMoving = true;
 }
 
@@ -87,12 +89,12 @@ void URoadMovementComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 
 	if (UpdatedComponent)
 	{
-		if (NextTargetRoad)
+		FVector ComponentLocation = UpdatedComponent->GetComponentLocation();
+
+		//~~ Within frame distance of NextTargetRoad ~~//
+		if ((TargetLocation - ComponentLocation).Size() < MovementSpeed * DeltaTime)
 		{
-			FVector RoadLocation = NextTargetRoad->GetActorLocation();
-			FVector ComponentLocation = UpdatedComponent->GetComponentLocation();
-			//~~ Within frame distance of  NextTargetRoad ~~//
-			if ((RoadLocation - ComponentLocation).Size() < MovementSpeed * DeltaTime) //TODO: Missing using DeltaTime
+			if (NextTargetRoad)
 			{
 				RoadOn = NextTargetRoad;
 				if (UpdatedPerson)
@@ -104,9 +106,61 @@ void URoadMovementComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 							bool bGoIn = UpdatedPerson->RespondToEntrance(Entrance);
 							if (bGoIn)
 							{
-								bIsMoving = false;
+								TargetStructure = Entrance;
 								TargetLocation = Entrance->GetActorLocation();
-								return;
+								NextTargetRoad = nullptr;
+								break;
+							}
+						}
+					}
+				}
+				if (CurrentRoute.IsValidIndex(CurrentRouteIndex + 1))
+				{
+					NextTargetRoad = CurrentRoute[CurrentRouteIndex + 1]; // Set next target road
+					CurrentRouteIndex++;
+				}
+				else if (CurrentRoute.Last() == NextTargetRoad)
+				{
+					NextTargetRoad = CurrentRoute[0];
+					CurrentRouteIndex = 0;
+				}
+			}
+			else if (TargetStructure)
+			{
+				TargetLocation = TargetStructure->GetActorLocation();
+
+			}
+			else
+			{
+				bIsMoving = false;
+			}
+		}
+
+
+		if (NextTargetRoad)
+		{
+			FVector RoadLocation = NextTargetRoad->GetActorLocation();
+			TargetLocation = RoadLocation;
+			//~~ Within frame distance of  NextTargetRoad ~~//
+			if ((TargetLocation - ComponentLocation).Size() < MovementSpeed * DeltaTime)
+			{
+				RoadOn = NextTargetRoad;
+				if (UpdatedPerson)
+				{
+					for (auto& Entrance : RoadOn->Entrances) // Output list instead. Look for input output match
+					{
+						if (Entrance)
+						{
+							bool bGoIn = UpdatedPerson->RespondToEntrance(Entrance);
+							if (bGoIn)
+							{
+								//TargetLocation = Entrance->GetActorLocation();
+								//break;
+								TargetStructure = Entrance;
+								NextTargetRoad = nullptr;
+								break;
+								//bIsMoving = false;
+								//return;
 							}
 							// parse entraces
 
@@ -118,7 +172,6 @@ void URoadMovementComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 						}
 					}
 				}
-				//int32 CurrentIndex = CurrentRoute.IndexOfByKey(NextTargetRoad);
 				if (CurrentRoute.IsValidIndex(CurrentRouteIndex + 1))
 				{
 					NextTargetRoad = CurrentRoute[CurrentRouteIndex + 1]; // Set next target road
@@ -133,16 +186,22 @@ void URoadMovementComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 					CurrentRouteIndex = 0;
 				}
 			}
-			// Set Rotation of UpdatedComponent to face NextTargetRoad
-			FVector LookVector = (RoadLocation - ComponentLocation).GetSafeNormal();
+			//~~ Set Rotation of UpdatedComponent to face TargetLocation/NextTargetRoad ~~~//
+			FVector LookVector = (TargetLocation - ComponentLocation).GetSafeNormal();
 			UpdatedComponent->SetWorldRotation(LookVector.Rotation());
 
 			bIsMoving = true;
+		}
+		if (TargetStructure)
+		{
+			TargetLocation = TargetStructure->GetActorLocation();
+
 		}
 		else
 		{
 			bIsMoving = false;
 		}
+		//~~ Move component ~~//
 		if (bIsMoving)
 		{
 			const FVector& ForwardVector = UpdatedComponent->GetForwardVector();

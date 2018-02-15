@@ -10,6 +10,7 @@
 //~~~~~ Forward Declarations ~~~~~//
 class UTileManager;
 class APerson;
+class AStructure;
 class ARoad;
 
 
@@ -29,6 +30,8 @@ public:
 
 	ARoad* NextTargetRoad;
 
+	AStructure* TargetStructure;
+
 	FVector TargetLocation;
 
 	USceneComponent* UpdatedComponent;
@@ -42,6 +45,7 @@ public:
 
 	float Velocity;
 
+	bool bInRoadNavigation;
 	bool bIsMoving;
 
 	int32 CurrentRouteIndex;

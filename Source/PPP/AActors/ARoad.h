@@ -34,6 +34,8 @@ public:
 
 	TArray<ARoad*> Neighbours;
 
+	//Outputs
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Road")
 	TArray<AStructure*> Entrances;
 
