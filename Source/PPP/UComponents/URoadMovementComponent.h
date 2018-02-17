@@ -28,9 +28,9 @@ public:
 
 	ARoad* RoadOn;
 
-	ARoad* NextTargetRoad;
-
-	AStructure* TargetStructure;
+	AActor* Target;
+	//ARoad* NextTargetRoad;
+	//AStructure* TargetStructure;
 
 	FVector TargetLocation;
 
@@ -49,6 +49,9 @@ public:
 	bool bIsMoving;
 
 	int32 CurrentRouteIndex;
+
+	UFUNCTION(BlueprintCallable, Category = "Components|Movement")
+	void SetTarget(AActor* NewTarget);
 
 	UFUNCTION(BlueprintCallable, Category = "Components|Movement")
 	void SetRoute(TArray<ARoad*> NewRoute);

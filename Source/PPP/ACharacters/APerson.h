@@ -46,6 +46,10 @@ public:
 	bool RespondToEntrance(AStructure* Entrance);
 	virtual bool RespondToEntrance_Implementation(AStructure* Entrance);
 
+	UFUNCTION(BlueprintNativeEvent)
+	bool RespondToStructure(AStructure* Structure);
+	virtual bool RespondToStructure_Implementation(AStructure* Structure);
+
 	//virtual bool RespondToEntrance(AStructure* Entrance) const;
 	
 };

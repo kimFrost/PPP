@@ -15,8 +15,8 @@ URoadMovementComponent::URoadMovementComponent()
 
 	TileManager = nullptr;
 	RoadOn = nullptr;
-	NextTargetRoad = nullptr;
-	TargetStructure = nullptr;
+	//NextTargetRoad = nullptr;
+	//TargetStructure = nullptr;
 	UpdatedComponent = nullptr;
 	UpdatedPerson = nullptr;
 
@@ -38,13 +38,22 @@ bool URoadMovementComponent::MoveUpdatedComponentImpl(const FVector& Delta, cons
 
 	return false;
 }
+void URoadMovementComponent::SetTarget(AActor* NewTarget)
+{
+	Target = NewTarget;
+	if (Target)
+	{
+		TargetLocation = Target->GetActorLocation();
+	}
+}
 void URoadMovementComponent::SetRoute(TArray<ARoad*> NewRoute)
 {
 	CurrentRoute = NewRoute;
 	if (CurrentRoute.IsValidIndex(0))
 	{
-		NextTargetRoad = CurrentRoute[0];
+		SetTarget(CurrentRoute[0]);
 		CurrentRouteIndex = 0;
+		//NextTargetRoad = CurrentRoute[0];
 	}
 }
 
@@ -91,12 +100,14 @@ void URoadMovementComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 	{
 		FVector ComponentLocation = UpdatedComponent->GetComponentLocation();
 
-		//~~ Within frame distance of NextTargetRoad ~~//
+		//~~ Within frame distance of TargetLocation ~~//
 		if ((TargetLocation - ComponentLocation).Size() < MovementSpeed * DeltaTime)
 		{
-			if (NextTargetRoad)
+			//~~ Destination is Road ~~//
+			ARoad* TargetRoad = Cast<ARoad>(Target);
+			if (TargetRoad)
 			{
-				RoadOn = NextTargetRoad;
+				RoadOn = TargetRoad;
 				if (UpdatedPerson)
 				{
 					for (auto& Entrance : RoadOn->Entrances) // Output list instead. Look for input output match
@@ -106,104 +117,49 @@ void URoadMovementComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 							bool bGoIn = UpdatedPerson->RespondToEntrance(Entrance);
 							if (bGoIn)
 							{
-								TargetStructure = Entrance;
-								TargetLocation = Entrance->GetActorLocation();
-								NextTargetRoad = nullptr;
+								SetTarget(Entrance);
 								break;
 							}
 						}
 					}
 				}
-				if (CurrentRoute.IsValidIndex(CurrentRouteIndex + 1))
+				if (Target == RoadOn)
 				{
-					NextTargetRoad = CurrentRoute[CurrentRouteIndex + 1]; // Set next target road
-					CurrentRouteIndex++;
-				}
-				else if (CurrentRoute.Last() == NextTargetRoad)
-				{
-					NextTargetRoad = CurrentRoute[0];
-					CurrentRouteIndex = 0;
-				}
-			}
-			else if (TargetStructure)
-			{
-				TargetLocation = TargetStructure->GetActorLocation();
-
-			}
-			else
-			{
-				bIsMoving = false;
-			}
-		}
-
-
-		if (NextTargetRoad)
-		{
-			FVector RoadLocation = NextTargetRoad->GetActorLocation();
-			TargetLocation = RoadLocation;
-			//~~ Within frame distance of  NextTargetRoad ~~//
-			if ((TargetLocation - ComponentLocation).Size() < MovementSpeed * DeltaTime)
-			{
-				RoadOn = NextTargetRoad;
-				if (UpdatedPerson)
-				{
-					for (auto& Entrance : RoadOn->Entrances) // Output list instead. Look for input output match
+					if (CurrentRoute.IsValidIndex(CurrentRouteIndex + 1))
 					{
-						if (Entrance)
-						{
-							bool bGoIn = UpdatedPerson->RespondToEntrance(Entrance);
-							if (bGoIn)
-							{
-								//TargetLocation = Entrance->GetActorLocation();
-								//break;
-								TargetStructure = Entrance;
-								NextTargetRoad = nullptr;
-								break;
-								//bIsMoving = false;
-								//return;
-							}
-							// parse entraces
-
-							// Check if go into and come back after a while and resume route
-
-							// If factory
-
-
-						}
+						SetTarget(CurrentRoute[CurrentRouteIndex + 1]);
+						CurrentRouteIndex++;
+					}
+					else if (CurrentRoute.Last() == Target)
+					{
+						SetTarget(CurrentRoute[0]);
+						CurrentRouteIndex = 0;
+					}
+					else
+					{
+						bIsMoving = false;
 					}
 				}
-				if (CurrentRoute.IsValidIndex(CurrentRouteIndex + 1))
+			}
+			else {
+				//~~ Destination is Structure ~~//
+				AStructure* TargetStructure = Cast<AStructure>(Target);
+				if (TargetStructure)
 				{
-					NextTargetRoad = CurrentRoute[CurrentRouteIndex + 1]; // Set next target road
-					CurrentRouteIndex++;
-				}
-				else if (CurrentRoute.Last() == NextTargetRoad) 
-				{
-					// At end
+					// At structure destination. What now??
 					//bIsMoving = false;
-					//NextTargetRoad = nullptr;
-					NextTargetRoad = CurrentRoute[0];
-					CurrentRouteIndex = 0;
+					SetTarget(TargetStructure->TileExit->RoadOnTile);
 				}
 			}
-			//~~ Set Rotation of UpdatedComponent to face TargetLocation/NextTargetRoad ~~~//
-			FVector LookVector = (TargetLocation - ComponentLocation).GetSafeNormal();
-			UpdatedComponent->SetWorldRotation(LookVector.Rotation());
+		}
 
-			bIsMoving = true;
-		}
-		if (TargetStructure)
-		{
-			TargetLocation = TargetStructure->GetActorLocation();
-
-		}
-		else
-		{
-			bIsMoving = false;
-		}
 		//~~ Move component ~~//
 		if (bIsMoving)
 		{
+			//~~ Set Rotation of UpdatedComponent to face TargetLocation ~~~//
+			FVector LookVector = (TargetLocation - ComponentLocation).GetSafeNormal();
+			UpdatedComponent->SetWorldRotation(LookVector.Rotation());
+
 			const FVector& ForwardVector = UpdatedComponent->GetForwardVector();
 			const FQuat& NewRotationQuat = UpdatedComponent->GetComponentQuat();
 			const FVector& NewDelta = ForwardVector * MovementSpeed * DeltaTime; //TODO: Missing using DeltaTime

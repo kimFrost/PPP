@@ -35,15 +35,13 @@ void APerson::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 }
 
-/*
-bool APerson::RespondToEntrance(AStructure* Entrance) const
-{
-	return false;
-}
-*/
 
 
 bool APerson::RespondToEntrance_Implementation(AStructure* Entrance)
+{
+	return false;
+}
+bool APerson::RespondToStructure_Implementation(AStructure* Entrance)
 {
 	return false;
 }
