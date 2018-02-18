@@ -148,6 +148,20 @@ void URoadMovementComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 				{
 					// At structure destination. What now??
 					//bIsMoving = false;
+
+					// Interaction with structure target
+
+					if (UpdatedPerson)
+					{
+						UpdatedPerson->RespondToStructure(TargetStructure);
+
+						// Push outputs
+						// Labour
+						// Trading
+						// Look for input/output matches
+					}
+
+					//RespondToStructure
 					SetTarget(TargetStructure->TileExit->RoadOnTile);
 				}
 			}

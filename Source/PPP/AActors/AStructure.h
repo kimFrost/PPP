@@ -47,6 +47,7 @@ public:
 	void Init();
 
 
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -55,6 +56,10 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+
+	UFUNCTION(BlueprintNativeEvent)
+	void RespondToStructure(AStructure* Structure);
+	virtual void RespondToStructure_Implementation(AStructure* Structure);
 	
 	
 };

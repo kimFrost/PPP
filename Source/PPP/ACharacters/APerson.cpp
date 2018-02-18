@@ -41,7 +41,5 @@ bool APerson::RespondToEntrance_Implementation(AStructure* Entrance)
 {
 	return false;
 }
-bool APerson::RespondToStructure_Implementation(AStructure* Entrance)
-{
-	return false;
-}
+void APerson::RespondToStructure_Implementation(AStructure* Entrance)
+{}
