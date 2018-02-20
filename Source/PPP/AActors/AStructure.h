@@ -11,6 +11,7 @@
 //~~~~~ Forward Declarations ~~~~~//
 class UTile;
 class ARoad;
+class APerson;
 
 
 UCLASS()
@@ -58,8 +59,8 @@ public:
 
 
 	UFUNCTION(BlueprintNativeEvent)
-	void RespondToStructure(AStructure* Structure);
-	virtual void RespondToStructure_Implementation(AStructure* Structure);
+	void Interact(APerson* Person);
+	virtual void Interact_Implementation(APerson* Person);
 	
 	
 };

@@ -153,15 +153,13 @@ void URoadMovementComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 
 					if (UpdatedPerson)
 					{
-						UpdatedPerson->RespondToStructure(TargetStructure);
-
+						//UpdatedPerson->RespondToStructure(TargetStructure);
+						TargetStructure->Interact(UpdatedPerson);
 						// Push outputs
 						// Labour
 						// Trading
 						// Look for input/output matches
 					}
-
-					//RespondToStructure
 					SetTarget(TargetStructure->TileExit->RoadOnTile);
 				}
 			}

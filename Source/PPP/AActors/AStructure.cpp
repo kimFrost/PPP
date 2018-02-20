@@ -3,6 +3,7 @@
 #include "AStructure.h"
 #include "UObjects/UTile.h"
 #include "ARoad.h"
+#include "ACharacters/APerson.h"
 #include "Libraries/UTilesLibrary.h"
 
 
@@ -165,3 +166,5 @@ void AStructure::Tick(float DeltaTime)
 
 }
 
+void AStructure::Interact_Implementation(APerson* Person)
+{}
