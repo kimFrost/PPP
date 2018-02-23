@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "APerson.h"
+#include "Libraries/UCustomTypesLibrary.h"
 #include "AActors/AStructure.h"
 
 
@@ -11,6 +12,8 @@ APerson::APerson()
 	PrimaryActorTick.bCanEverTick = false;
 
 	bHasWorked = false;
+	Mood = EPersonMood::VE_Neutral;
+	Energy = 1;
 }
 
 // Called when the game starts or when spawned

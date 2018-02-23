@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
+#include "Libraries/UCustomTypesLibrary.h"
 #include "APerson.generated.h"
 
 
@@ -30,6 +31,14 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Person")
 	bool bHasWorked;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Person")
+	EPersonMood Mood;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Person")
+	float Energy;
+
+	// Carrying items/goods
 
 protected:
 	// Called when the game starts or when spawned
