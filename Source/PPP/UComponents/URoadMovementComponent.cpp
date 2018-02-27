@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "URoadMovementComponent.h"
+#include "CollisionQueryParams.h"
 #include "AActors/ARoad.h"
 #include "AActors/AStructure.h"
 #include "ACharacters/APerson.h"
@@ -99,6 +100,44 @@ void URoadMovementComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 	if (UpdatedComponent)
 	{
 		FVector ComponentLocation = UpdatedComponent->GetComponentLocation();
+
+		bIsMoving = true;
+
+		// Trace for blocked
+		const float TraceDist = 50.f;
+		const FVector LineTraceStart = ComponentLocation + FVector(0, 0, 30);
+		const FVector LineTraceEnd = LineTraceStart + TraceDist * UpdatedComponent->GetForwardVector();
+
+		FCollisionQueryParams RV_TraceParams = FCollisionQueryParams(FName(TEXT("RV_Trace")), true, UpdatedComponent->GetOwner());
+		//FCollisionQueryParams RV_TraceParams(SCENE_QUERY_STAT(CheckWaterJump), true, CharacterOwner);
+		RV_TraceParams.bTraceComplex = false;
+		//RV_TraceParams.bTraceAsyncScene = true;
+		RV_TraceParams.bReturnPhysicalMaterial = false;
+		RV_TraceParams.AddIgnoredActor(UpdatedComponent->GetOwner());
+		//RV_TraceParams.TraceTag = TraceTag;
+
+		ECollisionChannel CollisionChannel = ECC_Visibility;
+		//FCollisionResponseParams LineResponseParam;
+
+		//const FName TraceTag("MyTraceTag");
+		//GetWorld()->DebugDrawTraceTag = TraceTag;
+		//RV_TraceParams.TraceTag = TraceTag;
+
+		//https://unrealcpp.com/line-trace-on-tick/
+
+		//FHitResult RV_Hit(ForceInit);
+		FHitResult RV_Hit(1.f);
+		//bool bBlockingHit = GetWorld()->LineTraceSingleByChannel(Hit, LineTraceStart, LineTraceStart + Down, CollisionChannel, QueryParams, ResponseParam);
+		GetWorld()->LineTraceSingleByChannel(RV_Hit, LineTraceStart, LineTraceEnd, CollisionChannel, RV_TraceParams);
+		if (RV_Hit.bBlockingHit) //GetNumOverlapHits
+		{
+			//Point->Location = RV_Hit.Location;
+			AActor* FoundActor = RV_Hit.GetActor();
+			if (FoundActor && FoundActor->IsA(APerson::StaticClass())) 
+			{
+				bIsMoving = false;
+			}
+		}
 
 		//~~ Within frame distance of TargetLocation ~~//
 		if ((TargetLocation - ComponentLocation).Size() < MovementSpeed * DeltaTime)
