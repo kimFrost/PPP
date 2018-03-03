@@ -2,6 +2,7 @@
 
 #include "APerson.h"
 #include "Libraries/UCustomTypesLibrary.h"
+#include "UObjects/UStat.h"
 #include "AActors/AStructure.h"
 
 
@@ -14,6 +15,12 @@ APerson::APerson()
 	bHasWorked = false;
 	Mood = EPersonMood::VE_Neutral;
 	Energy = 1;
+
+	SpawnStats.Add("Stress", 0);
+	SpawnStats.Add("Money", 0);
+	SpawnStats.Add("Wellness", 0);
+
+	//States.Add("Drunk", true);
 }
 
 // Called when the game starts or when spawned
@@ -21,6 +28,16 @@ void APerson::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	for (auto& SpawnStat : SpawnStats)
+	{
+		UStat* Stat = NewObject<UStat>(this);
+		if (Stat)
+		{
+			Stat->ID = SpawnStat.Key;
+			Stat->ConsumeMultiplier = SpawnStat.Value;
+			Stats.Add(Stat->ID, Stat);
+		}
+	}
 }
 
 // Called every frame

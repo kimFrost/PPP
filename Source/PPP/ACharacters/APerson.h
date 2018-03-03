@@ -12,6 +12,7 @@
 class UTileManager;
 class AStructure;
 class ARoad;
+class UStat;
 
 
 UCLASS()
@@ -35,8 +36,30 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Person")
 	EPersonMood Mood;
 
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Person")
 	float Energy;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Person", Meta = (ExposeOnSpawn = true))
+	TMap<FString, int32> SpawnStats;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Person")
+	TMap<FString, UStat*> Stats;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Person")
+	TMap<FString, bool> States;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Person")
+	float Stress;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Person")
+	float Money;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Person")
+	float Wellness;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Person")
+	bool bIsDrunk;
 
 	// Carrying items/goods
 
