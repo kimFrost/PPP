@@ -34,6 +34,7 @@ void APerson::BeginPlay()
 		if (Stat)
 		{
 			Stat->ID = SpawnStat.Key;
+			Stat->Value = SpawnStat.Value;
 			Stat->ConsumeMultiplier = SpawnStat.Value;
 			Stats.Add(Stat->ID, Stat);
 		}

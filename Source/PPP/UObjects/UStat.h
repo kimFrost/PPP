@@ -22,8 +22,10 @@ public:
 
 	FString ID;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Structure")
 	FString Title;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Structure")
 	float Value;
 
 	float MaxValue;
