@@ -103,6 +103,7 @@ void URoadMovementComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 
 		bIsMoving = true;
 
+		/*
 		// Trace for blocked
 		const float TraceDist = 40.f;
 		const FVector LineTraceStart = ComponentLocation + FVector(0, 0, 30);
@@ -151,6 +152,7 @@ void URoadMovementComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 				}
 			}
 		}
+		*/
 
 		//~~ Within frame distance of TargetLocation ~~//
 		if ((TargetLocation - ComponentLocation).Size() < MovementSpeed * DeltaTime)

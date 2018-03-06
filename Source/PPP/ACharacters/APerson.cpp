@@ -20,7 +20,7 @@ APerson::APerson()
 	SpawnStats.Add("Money", 0);
 	SpawnStats.Add("Wellness", 0);
 
-	//States.Add("Drunk", true);
+	States.Add("Drunk", false);
 }
 
 // Called when the game starts or when spawned

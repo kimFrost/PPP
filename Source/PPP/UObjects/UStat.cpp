@@ -42,5 +42,5 @@ float UStat::ClampValue()
 
 float UStat::UpdatePercentage()
 {
-	return Percentage = FMath::Ceil(Value / MaxValue); //* 100
+	return Percentage = FPlatformMath::CeilToFloat(Value / MaxValue); //* 100
 }
