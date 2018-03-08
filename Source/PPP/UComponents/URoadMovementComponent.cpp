@@ -24,6 +24,7 @@ URoadMovementComponent::URoadMovementComponent()
 	bWantsInitializeComponent = true;
 
 	MovementSpeed = 100.f;
+	MovementSpeedModifier = 1.f;
 	bInRoadNavigation = false;
 	bIsMoving = true;
 }
@@ -41,6 +42,7 @@ bool URoadMovementComponent::MoveUpdatedComponentImpl(const FVector& Delta, cons
 }
 void URoadMovementComponent::SetTarget(AActor* NewTarget)
 {
+	PrevTarget = Target;
 	Target = NewTarget;
 	if (Target)
 	{
@@ -90,8 +92,6 @@ void URoadMovementComponent::InitializeComponent()
 void URoadMovementComponent::BeginPlay()
 {
 	Super::BeginPlay();
-	
-	
 }
 void URoadMovementComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
@@ -155,7 +155,7 @@ void URoadMovementComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 		*/
 
 		//~~ Within frame distance of TargetLocation ~~//
-		if ((TargetLocation - ComponentLocation).Size() < MovementSpeed * DeltaTime)
+		if ((TargetLocation - ComponentLocation).Size() < MovementSpeed * MovementSpeedModifier * DeltaTime)
 		{
 			//~~ Destination is Road ~~//
 			ARoad* TargetRoad = Cast<ARoad>(Target);
@@ -166,7 +166,7 @@ void URoadMovementComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 				{
 					for (auto& Entrance : RoadOn->Entrances) // Output list instead. Look for input output match
 					{
-						if (Entrance)
+						if (Entrance && Entrance != PrevTarget)
 						{
 							bool bGoIn = UpdatedPerson->RespondToEntrance(Entrance);
 							if (bGoIn)
@@ -228,11 +228,11 @@ void URoadMovementComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 
 			const FVector& ForwardVector = UpdatedComponent->GetForwardVector();
 			const FQuat& NewRotationQuat = UpdatedComponent->GetComponentQuat();
-			const FVector& NewDelta = ForwardVector * MovementSpeed * DeltaTime; //TODO: Missing using DeltaTime
+			const FVector& NewDelta = ForwardVector * MovementSpeed * MovementSpeedModifier * DeltaTime; //TODO: Missing using DeltaTime
 			//FHitResult* OutHit = nullptr;
 
 			UpdatedComponent->MoveComponent(NewDelta, NewRotationQuat, false, nullptr, EMoveComponentFlags::MOVECOMP_NoFlags, ETeleportType::TeleportPhysics);
-			UpdatedComponent->ComponentVelocity = FVector(100, 0, 0);
+			UpdatedComponent->ComponentVelocity = FVector(MovementSpeed * MovementSpeedModifier, 0, 0);
 
 			//
 			//const FVector Adjustment = FVector::VectorPlaneProject(DeltaTime, Normal) * Time;

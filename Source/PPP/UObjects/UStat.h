@@ -19,30 +19,51 @@ public:
 	UStat();
 	~UStat();
 
-
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Stat", Meta = (ExposeOnSpawn = true))
 	FString ID;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Structure")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Stat", Meta = (ExposeOnSpawn = true))
 	FString Title;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Structure")
-	float Value;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Stat", Meta = (ExposeOnSpawn = true))
+	int32 Value;
 
-	float MaxValue;
+	int32 MinValue;
+	int32 MaxValue;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Stat")
 	float Percentage;
 
 	float ConsumeMultiplier;
 
+	int32 Set(int32 _Value);
 
-	float Add(float Amount);
+	int32 Add(int32 Amount);
 
-	float Subtract(float Amount);
+	int32 Subtract(int32 Amount);
 
 private:
 
-	float ClampValue();
+	int32 ClampValue();
 
 	float UpdatePercentage();
 	
 };
+
+
+/*
+UINTERFACE(Blueprintable)
+class UStatInterface : public UInterface
+{
+    GENERATED_BODY()
+};
+
+class IStatInterface
+{    
+    GENERATED_BODY()
+
+public:
+    
+
+};
+*/

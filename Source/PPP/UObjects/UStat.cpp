@@ -5,29 +5,38 @@
 
 UStat::UStat()
 {
-	MaxValue = 1;
+	MinValue = -10;
+	MaxValue = 10;
 	ConsumeMultiplier = 1;
-	Value = MaxValue;
+	Value = 0;
 }
 
 UStat::~UStat()
 {}
 
 
-float UStat::Add(float Amount)
+int32 UStat::Set(int32 _Value)
+{
+	Value = _Value;
+	return ClampValue();
+}
+
+int32 UStat::Add(int32 Amount)
 {
 	Value += Amount;
 	return ClampValue();
 }
 
-float UStat::Subtract(float Amount)
+int32 UStat::Subtract(int32 Amount)
 {
 	Value -= Amount;
 	return ClampValue();
 }
 
-float UStat::ClampValue()
+int32 UStat::ClampValue()
 {
+	Value = FMath::Clamp(Value, MinValue, MaxValue);
+	/*
 	if (Value < 0)
 	{
 		Value = 0;
@@ -36,6 +45,7 @@ float UStat::ClampValue()
 	{
 		Value = MaxValue;
 	}
+	*/
 	UpdatePercentage();
 	return Value;
 }

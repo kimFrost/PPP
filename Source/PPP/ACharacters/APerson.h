@@ -40,6 +40,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Person")
 	float Energy;
 
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Person", Meta = (ExposeOnSpawn = true))
 	TMap<FString, int32> SpawnStats;
 
@@ -49,19 +50,22 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Person")
 	TMap<FString, bool> States;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Person")
-	float Stress;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Person")
-	float Money;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Person")
-	float Wellness;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Person")
-	bool bIsDrunk;
+	//FST_Payload Payload; // Instead of Stats, States and Items
 
 	// Carrying items/goods
+
+public:
+
+	// static void SetRandomStreamSeed(UPARAM(ref) FRandomStream& Stream, int32 NewSeed);
+
+	UFUNCTION(BlueprintCallable, Category = "Person")
+	void PushPayload(const FST_Payload& Payload);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Person")
+	void GetPayload(FST_Payload& Payload);
+
+	UFUNCTION(BlueprintCallable, Category = "Person")
+	void Reset();
 
 protected:
 	// Called when the game starts or when spawned

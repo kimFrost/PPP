@@ -3,6 +3,7 @@
 #include "AStructure.h"
 #include "UObjects/UTile.h"
 #include "ARoad.h"
+#include "UObjects/UStat.h"
 #include "ACharacters/APerson.h"
 #include "Libraries/UTilesLibrary.h"
 
@@ -16,6 +17,32 @@ AStructure::AStructure()
 	PrimaryActorTick.bCanEverTick = true;
 
 	bFloodFill = false;
+}
+
+void AStructure::PushPayload(const FST_Payload& Payload)
+{
+	for (auto& PayloadStat : Payload.Stats)
+	{
+		if (Stats.Contains(PayloadStat.Key))
+		{
+			UStat* Stat = Stats[PayloadStat.Key];
+			if (Stat)
+			{
+				Stat->Add(PayloadStat.Value);
+			}
+		}
+	}
+	for (auto& PayloadState : Payload.States)
+	{
+		if (States.Contains(PayloadState.Key))
+		{
+			States[PayloadState.Key] = PayloadState.Value;
+		}
+	}
+	for (auto& PayloadItem : Payload.Items)
+	{
+
+	}
 }
 
 TArray<ARoad*> AStructure::GetRouteToClosetOfClass(int32 MaxRange, TSubclassOf<class AStructure> StructureClass)
@@ -155,15 +182,28 @@ void AStructure::Init()
 // Called when the game starts or when spawned
 void AStructure::BeginPlay()
 {
+	for (auto& SpawnStat : SpawnStats)
+	{
+		UStat* Stat = NewObject<UStat>(this);
+		if (Stat)
+		{
+			Stat->ID = SpawnStat.Key;
+			Stat->Title = SpawnStat.Key;
+			Stat->Value = SpawnStat.Value;
+			Stat->ConsumeMultiplier = SpawnStat.Value;
+			Stats.Add(Stat->ID, Stat);
+		}
+	}
+
+	//~~ This calleds the blueprint native event BeginPlay in AActor which calls beginplay in blueprint. So needs to be at the bottom ~~//
 	Super::BeginPlay();
-	
 }
 
 // Called every frame
 void AStructure::Tick(float DeltaTime)
 {
-	Super::Tick(DeltaTime);
 
+	Super::Tick(DeltaTime);
 }
 
 void AStructure::Interact_Implementation(APerson* Person)

@@ -28,6 +28,7 @@ public:
 
 	ARoad* RoadOn;
 
+	AActor* PrevTarget;
 	AActor* Target;
 	//ARoad* NextTargetRoad;
 	//AStructure* TargetStructure;
@@ -42,6 +43,9 @@ public:
 	TArray<ARoad*> CurrentRoute;
 
 	float MovementSpeed;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
+	float MovementSpeedModifier;
 
 	float Velocity;
 

@@ -9,6 +9,10 @@
 
 
 
+//~~~~~ Forward Declarations ~~~~~//
+class UStat;
+
+
 UENUM(BlueprintType)
 enum class EPersonMood : uint8
 {
@@ -27,6 +31,42 @@ namespace EPersonMood
 	};
 }
 */
+
+
+USTRUCT(BlueprintType)
+struct FST_Payload
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	FST_Payload(
+		TMap<FString, int32> Stats = TMap<FString, int32>(),
+		TMap<FString, bool> States = TMap<FString, bool>(),
+		TArray<FString> Items = TArray<FString>())
+		: Stats(Stats)
+		, States(States)
+		, Items(Items)
+	{}
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Custom")
+	TMap<FString, int32> Stats;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Custom")
+	TMap<FString, bool> States;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Custom")
+	TArray<FString> Items;
+};
+
+/*
+{
+stats: [
+{stress: -1},
+{ money: -1 }
+	   ],
+	states : [
+{drunk: true}
+			 ],
+	items : []
+}
+*/
+
 
 UCLASS()
 class PPP_API UCustomTypesLibrary : public UBlueprintFunctionLibrary

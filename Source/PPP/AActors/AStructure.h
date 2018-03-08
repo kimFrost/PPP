@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Libraries/UCustomTypesLibrary.h"
 #include "AStructure.generated.h"
 
 
@@ -12,6 +13,8 @@
 class UTile;
 class ARoad;
 class APerson;
+class UStat;
+
 
 
 UCLASS()
@@ -37,6 +40,22 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Structure")
 	TArray<ARoad*> CurrentRoute;
+
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Structure", Meta = (ExposeOnSpawn = true))
+	TMap<FString, int32> SpawnStats;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Structure")
+	TMap<FString, UStat*> Stats;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Structure")
+	TMap<FString, bool> States;
+
+public:
+
+	UFUNCTION(BlueprintCallable, Category = "Person")
+	void PushPayload(const FST_Payload& Payload);
+
 
 	//UClass*
 	//TSubclassOf
