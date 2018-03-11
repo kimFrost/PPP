@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
-#include "UTileManager.generated.h"
+#include "UGridManager.generated.h"
 
 
 //~~~~~ Forward Declarations ~~~~~//
@@ -12,13 +12,13 @@ class UTile;
 
 
 UCLASS(Blueprintable, BlueprintType)
-class PPP_API UTileManager : public UObject
+class PPP_API UGridManager : public UObject
 {
 	GENERATED_BODY()
 	
 public:
-	UTileManager();
-	~UTileManager();
+	UGridManager();
+	~UGridManager();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Grid")
 	int32 CountX;
@@ -39,10 +39,11 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Grid")
 	UTile* WorldLocationToTile(FVector WorldLocation);
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Grid")
+	TArray<UTile*> Tiles;
 
 private:
 
-	UPROPERTY(VisibleAnywhere, Category = "Grid")
-	TArray<UTile*> Tiles;
+	
 	
 };

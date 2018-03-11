@@ -1,6 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "UTilesLibrary.h"
+#include "UGridLibrary.h"
 
 
 const TArray<FVector> TileDirections = {
@@ -11,7 +11,7 @@ const TArray<FVector> TileDirections = {
 };
 
 
-FVector UTilesLibrary::DirectionToLocation(int32 Direction)
+FVector UGridLibrary::DirectionToLocation(int32 Direction)
 {
 	Direction = Direction % TileDirections.Num();
 
@@ -19,7 +19,7 @@ FVector UTilesLibrary::DirectionToLocation(int32 Direction)
 	return TileDirections[Direction] * 50;
 }
 
-FRotator UTilesLibrary::DirectionToRotation(int32 Direction)
+FRotator UGridLibrary::DirectionToRotation(int32 Direction)
 {
 	FVector Location = DirectionToLocation(Direction);
 	return Location.Rotation();

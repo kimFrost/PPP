@@ -8,7 +8,7 @@
 
 
 //~~~~~ Forward Declarations ~~~~~//
-class UTileManager;
+class UGridManager;
 class ARoad;
 class AStructure;
 
@@ -34,7 +34,7 @@ public:
 	FVector WorldLocation;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Grid")
-	UTileManager* Manager;
+	UGridManager* Manager;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Grid")
 	TArray<UTile*> AdjacentTiles;

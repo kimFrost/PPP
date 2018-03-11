@@ -4,13 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
-#include "UTilesLibrary.generated.h"
+#include "UGridLibrary.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class PPP_API UTilesLibrary : public UBlueprintFunctionLibrary
+class PPP_API UGridLibrary : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
 	

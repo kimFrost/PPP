@@ -8,7 +8,7 @@
 
 
 //~~~~~ Forward Declarations ~~~~~//
-class UTileManager;
+class UGridManager;
 class APerson;
 class AStructure;
 class ARoad;
@@ -24,7 +24,7 @@ public:
 	URoadMovementComponent();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement", Meta = (ExposeOnSpawn = true))
-	UTileManager* TileManager;
+	UGridManager* GridManager;
 
 	ARoad* RoadOn;
 

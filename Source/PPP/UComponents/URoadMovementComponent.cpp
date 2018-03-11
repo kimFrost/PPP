@@ -6,15 +6,15 @@
 #include "AActors/AStructure.h"
 #include "ACharacters/APerson.h"
 #include "UObjects/UTile.h"
-#include "UObjects/UTileManager.h"
-#include "Libraries/UTilesLibrary.h"
+#include "UObjects/UGridManager.h"
+#include "Libraries/UGridLibrary.h"
 
 
 URoadMovementComponent::URoadMovementComponent()
 {
 	PrimaryComponentTick.bCanEverTick = true;
 
-	TileManager = nullptr;
+	GridManager = nullptr;
 	RoadOn = nullptr;
 	//NextTargetRoad = nullptr;
 	//TargetStructure = nullptr;

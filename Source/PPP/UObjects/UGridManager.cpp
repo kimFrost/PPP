@@ -1,8 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "UTileManager.h"
+#include "UGridManager.h"
 #include "UObjects/UTile.h"
-#include "Libraries/UTilesLibrary.h"
+#include "Libraries/UGridLibrary.h"
 
 
 const TArray<FVector> TileDirections = {
@@ -12,7 +12,7 @@ const TArray<FVector> TileDirections = {
 	FVector(-1, 0, 0)
 };
 
-UTileManager::UTileManager()
+UGridManager::UGridManager()
 {
 	CountX = 100;
 	CountY = 100;
@@ -20,11 +20,13 @@ UTileManager::UTileManager()
 	 
 }
 
-UTileManager::~UTileManager()
+UGridManager::~UGridManager()
 {}
 
-void UTileManager::CreateTiles()
+void UGridManager::CreateTiles()
 {
+	Tiles.Empty();
+
 	for (int32 Y = 0; Y < CountY; Y++)
 	{
 		for (int32 X = 0; X < CountX; X++)
@@ -64,7 +66,7 @@ void UTileManager::CreateTiles()
 
 }
 
-UTile* UTileManager::CoordinatesToTile(int32 X, int32 Y, bool Clamp = true)
+UTile* UGridManager::CoordinatesToTile(int32 X, int32 Y, bool Clamp = true)
 {
 	int32 _X = X;
 	int32 _Y = Y;
@@ -81,7 +83,7 @@ UTile* UTileManager::CoordinatesToTile(int32 X, int32 Y, bool Clamp = true)
 	return nullptr;
 }
 
-UTile* UTileManager::WorldLocationToTile(FVector WorldLocation)
+UTile* UGridManager::WorldLocationToTile(FVector WorldLocation)
 {
 	int32 X = FMath::FloorToInt(WorldLocation.X / TileSize);
 	int32 Y = FMath::FloorToInt(WorldLocation.Y / TileSize);

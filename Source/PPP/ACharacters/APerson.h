@@ -9,7 +9,7 @@
 
 
 //~~~~~ Forward Declarations ~~~~~//
-class UTileManager;
+class UGridManager;
 class AStructure;
 class ARoad;
 class UStat;
@@ -25,7 +25,7 @@ public:
 	APerson();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Person", Meta = (ExposeOnSpawn = true))
-	UTileManager* TileManager;
+	UGridManager* TileManager;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Person", Meta = (ExposeOnSpawn = true))
 	TArray<ARoad*> CurrentRoute;
