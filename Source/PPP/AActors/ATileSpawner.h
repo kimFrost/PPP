@@ -4,32 +4,37 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Components/InstancedStaticMeshComponent.h"
-#include "ATileManager.generated.h"
+#include "ATileSpawner.generated.h"
 
 
 //~~~~~ Forward Declarations ~~~~~//
-class UGridManager;
 class UHierarchicalInstancedStaticMeshComponent;
-//class UInstancedStaticMeshComponent;
+class UInstancedStaticMeshComponent;
+
 
 UCLASS()
-class PPP_API ATileManager : public AActor
+class PPP_API ATileSpawner : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	ATileManager();
+	ATileSpawner();
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TileManager")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TileSpawner")
+	int32 CountX;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TileSpawner")
+	int32 CountY;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TileSpawner")
 	bool bUpdateTiles;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "TileManager")
-	UGridManager* GridManager;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TileSpawner")
+	UStaticMesh* MeshType;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TileManager")
-	class UInstancedStaticMeshComponent* HISMComp;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TileSpawner")
+	UInstancedStaticMeshComponent* ISMComp;
 
 	void CreateBlocks();
 

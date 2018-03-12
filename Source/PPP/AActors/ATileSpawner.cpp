@@ -1,6 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "ATileManager.h"
+#include "ATileSpawner.h"
 #include "UObjects/UTile.h"
 #include "UObjects/UGridManager.h"
 #include "Components/HierarchicalInstancedStaticMeshComponent.h"
@@ -9,85 +9,88 @@
 
 
 // Sets default values
-ATileManager::ATileManager()
+ATileSpawner::ATileSpawner()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 	bUpdateTiles = false;
+	CountX = 20;
+	CountY = 20;
 
 	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("RootComponent"));
 
-	//AddOwnedComponent(RootScene);
-
-	HISMComp = CreateDefaultSubobject<UInstancedStaticMeshComponent>(TEXT("HISMComp"));
-	HISMComp->SetupAttachment(RootComponent);
-
-	//HISMComp->RegisterComponent();
-
-
-	//AddOwnedComponent(HISMComp);
-	//AddInstanceComponent(HISMComp);
-	//HISMComp->AttachTo()
-	HISMComp->SetMobility(EComponentMobility::Static);
-	HISMComp->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-	HISMComp->SetFlags(RF_Transactional);
 
 	static ConstructorHelpers::FObjectFinder<UStaticMesh>BaseMeshObj(TEXT("StaticMesh'/Game/PPP/Meshes/Shapes/SM_Block-50.SM_Block-50'"));
 	if (BaseMeshObj.Succeeded())
 	{
-		HISMComp->SetStaticMesh(BaseMeshObj.Object);
+		MeshType = BaseMeshObj.Object;
 	}
-
-	GridManager = CreateDefaultSubobject<UGridManager>(TEXT("GridManager"));
-
-
-	//Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
-
-	//GridManager = NewObject<UGridManager>();
-
 }
 
-void ATileManager::CreateBlocks()
+void ATileSpawner::CreateBlocks()
 {
-	if (HISMComp)
+	if (ISMComp)
 	{
-		HISMComp->ClearInstances();
-		if (GridManager)
+		ISMComp->ClearInstances();
+
+		float Size = 50.f;
+
+		for (int32 y = 0; y < CountY; y++)
 		{
-			for (auto& Tile : GridManager->Tiles)
+			for (int32 x = 0; x < CountX; x++)
 			{
-				if (Tile)
-				{
-					FRotator Rotation = FRotator(0, 0, 0);
-					FVector Location = Tile->WorldLocation;
-					FTransform Transform = FTransform(Rotation, Location);
-					int32 Index = HISMComp->AddInstance(Transform);
-				}
+				FRotator Rotation = FRotator(0, 0, 0);
+				FVector Location = FVector(x * Size, y * Size, 0);
+				FTransform Transform = FTransform(Rotation, Location);
+				int32 Index = ISMComp->AddInstance(Transform);
 			}
 		}
 	}
 }
 
-void ATileManager::BeginPlay()
+void ATileSpawner::BeginPlay()
 {
-	if (GridManager)
-	{
-		GridManager->CreateTiles();
-		CreateBlocks();
-	}
+	//CreateBlocks();
 	Super::BeginPlay();
 }
 
-void ATileManager::Tick(float DeltaTime)
+void ATileSpawner::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
 }
 
-void ATileManager::OnConstruction(const FTransform& Transform)
+void ATileSpawner::OnConstruction(const FTransform& Transform)
 {
 	Super::OnConstruction(Transform);
+
+	if (bUpdateTiles)
+	{
+		bUpdateTiles = false;
+		
+		// Destroy all instance components
+		TArray<UActorComponent*> currentICs = this->GetInstanceComponents();
+		for (UActorComponent* ic : currentICs)
+			if (ic)
+				ic->DestroyComponent();
+		
+		/*
+		if (ISMComp)
+		{
+			ISMComp->ClearInstances();
+			ISMComp->DestroyComponent();
+		}
+		*/
+
+		ISMComp = NewObject<UInstancedStaticMeshComponent>(this);
+		ISMComp->RegisterComponent();
+		ISMComp->SetStaticMesh(MeshType);
+		ISMComp->SetFlags(RF_Transactional);
+		AddInstanceComponent(ISMComp);
+
+		CreateBlocks();
+	}
 
 	//RegisterAllComponents();
 
