@@ -8,6 +8,14 @@
 #include "ATileManager.generated.h"
 
 
+
+//~~~~~ Purpose ~~~~~//
+/*
+	To spawn and manage instanced tiles. 
+	This will not handle any input, but will only respond to events from Grid Manager.
+*/
+
+
 //~~~~~ Forward Declarations ~~~~~//
 class UGridManager;
 class UHierarchicalInstancedStaticMeshComponent;
@@ -24,6 +32,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TileManager")
 	bool bUpdateTiles;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TileManager")
+	bool bDrawDebugLine;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "TileManager")
 	UGridManager* GridManager;
@@ -43,4 +54,5 @@ public:
 
 	virtual void OnConstruction(const FTransform& Transform) override;
 	
+	//virtual bool ShouldTickIfViewportsOnly() const override;
 };

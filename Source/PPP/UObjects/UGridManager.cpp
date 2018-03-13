@@ -25,7 +25,7 @@ UGridManager::~UGridManager()
 
 void UGridManager::CreateTiles()
 {
-	Tiles.Empty();
+	GridTiles.Empty();
 
 	for (int32 Y = 0; Y < CountY; Y++)
 	{
@@ -40,13 +40,13 @@ void UGridManager::CreateTiles()
 				Tile->WorldLocation = Location;
 				Tile->Manager = this;
 				//Tile->AddToRoot(); // Prevent Garbage collection
-				Tile->Index = Tiles.Add(Tile);
+				Tile->Index = GridTiles.Add(Tile);
 			}
 		}
 	}
 
 	//~~ Set Adjacent tiles in each tile ~~//
-	for (auto& Tile : Tiles)
+	for (auto& Tile : GridTiles)
 	{
 		if (Tile)
 		{
@@ -65,7 +65,6 @@ void UGridManager::CreateTiles()
 	}
 
 }
-
 UTile* UGridManager::CoordinatesToTile(int32 X, int32 Y, bool Clamp = true)
 {
 	int32 _X = X;
@@ -76,16 +75,43 @@ UTile* UGridManager::CoordinatesToTile(int32 X, int32 Y, bool Clamp = true)
 		_Y = FMath::Clamp(Y, 0, CountY - 1);
 	}
 	int32 Index = _X + _Y * CountX;
-	if (Tiles.IsValidIndex(Index))
+	if (GridTiles.IsValidIndex(Index))
 	{
-		return Tiles[Index];
+		return GridTiles[Index];
 	}
 	return nullptr;
 }
-
 UTile* UGridManager::WorldLocationToTile(FVector WorldLocation)
 {
 	int32 X = FMath::FloorToInt(WorldLocation.X / TileSize);
 	int32 Y = FMath::FloorToInt(WorldLocation.Y / TileSize);
 	return CoordinatesToTile(X, Y);
+}
+void UGridManager::GetTilesInArea(int32 X, int32 Y, int32 sizeX, int32 sizeY, UPARAM(ref) TArray<UTile*>& Tiles)
+{
+	for (int32 _Y = 0; _Y < sizeY; _Y++)
+	{
+		for (int32 _X = 0; _X < sizeX; _X++)
+		{
+			UTile* Tile = CoordinatesToTile(_X + X, _Y + Y);
+			if (Tile)
+			{
+				Tiles.Add(Tile);
+			}
+		}
+	}
+}
+bool UGridManager::AreTilesFree(UPARAM(ref) const TArray<UTile*>& Tiles)
+{
+	for (auto& Tile : GridTiles)
+	{
+		if (Tile)
+		{
+			if (Tile->RoadOnTile || Tile->StructureOnTile)
+			{
+				return false;
+			}
+		}
+	}
+	return true;
 }
