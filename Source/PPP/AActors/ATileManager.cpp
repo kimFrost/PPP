@@ -23,7 +23,7 @@ ATileManager::ATileManager()
 	bDrawDebugLine = false;
 
 	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("RootComponent"));
-
+	RootComponent->SetMobility(EComponentMobility::Static);
 	//AddOwnedComponent(RootScene);
 
 	HISMComp = CreateDefaultSubobject<UInstancedStaticMeshComponent>(TEXT("HISMComp"));
@@ -93,7 +93,7 @@ void ATileManager::BeginPlay()
 	if (GridManager)
 	{
 		//GridManager->CreateTiles();
-		CreateBlocks();
+		//CreateBlocks();
 	}
 	Super::BeginPlay();
 }

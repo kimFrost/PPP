@@ -15,6 +15,33 @@ ABuilder::ABuilder()
 
 	Rotation = 0;
 	bIsBuildValid = false;
+
+	USceneComponent* RootScene = CreateDefaultSubobject<USceneComponent>(TEXT("Scene"));
+	SetRootComponent(RootScene);
+
+	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
+	Mesh->SetupAttachment(RootComponent);
+	Mesh->SetCastShadow(false);
+	Mesh->SetMobility(EComponentMobility::Movable);
+	/*
+	static ConstructorHelpers::FObjectFinder<UStaticMesh>BaseMeshObj(TEXT("StaticMesh'/Game/Meshes/SM_HexCylinder.SM_HexCylinder'"));
+	if (BaseMeshObj.Succeeded())
+	{
+		DefaultMesh = BaseMeshObj.Object;
+		Mesh->SetStaticMesh(DefaultMesh);
+	}
+	*/
+
+	Arrow = CreateDefaultSubobject<UArrowComponent>(TEXT("Arrow"));
+	if (Arrow)
+	{
+		Arrow->SetupAttachment(RootComponent);
+		Arrow->SetHiddenInGame(false);
+		Arrow->ArrowSize = 2.1;
+		Arrow->SetRelativeRotation(FRotator(0, -60.f, 0));
+		Arrow->SetRelativeLocation(FVector(0, 0, 30));
+		//Arrow->SetMobility(EComponentMobility::Movable);
+	}
 }
 /*
 void ABuilder::SetData(FST_Structure& Data)
