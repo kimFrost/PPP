@@ -1,10 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+#include "ABuilder.h"
 #include "Engine/StreamableManager.h"
 #include "Components/ArrowComponent.h"
 #include "Libraries/UGridLibrary.h"
 #include "UObjects/UTile.h"
-#include "ABuilder.h"
 
 
 // Sets default values
@@ -66,7 +66,7 @@ UStaticMesh* ABuilder::LoadMesh(TAssetPtr<UStaticMesh> MeshAssetID)
 {
 	if (MeshAssetID.IsPending())
 	{
-		const FStringAssetReference& AssetRef = MeshAssetID.ToStringReference();
+		const FStringAssetReference& AssetRef = MeshAssetID.ToSoftObjectPath();
 		MeshAssetID = Cast<UStaticMesh>(AssetLoader.LoadSynchronous(AssetRef, true));
 	}
 	return MeshAssetID.Get();
