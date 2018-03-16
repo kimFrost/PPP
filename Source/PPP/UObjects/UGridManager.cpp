@@ -65,7 +65,7 @@ void UGridManager::CreateTiles()
 	}
 
 }
-UTile* UGridManager::CoordinatesToTile(int32 X, int32 Y, bool Clamp = true)
+UTile* UGridManager::CoordinatesToTile(int32 X, int32 Y, bool Clamp)
 {
 	int32 _X = X;
 	int32 _Y = Y;

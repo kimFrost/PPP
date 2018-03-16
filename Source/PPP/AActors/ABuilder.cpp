@@ -3,6 +3,7 @@
 #include "ABuilder.h"
 #include "Engine/StreamableManager.h"
 #include "Components/ArrowComponent.h"
+#include "Libraries/UCustomTypesLibrary.h"
 #include "Libraries/UGridLibrary.h"
 #include "UObjects/UTile.h"
 
@@ -43,24 +44,6 @@ ABuilder::ABuilder()
 		//Arrow->SetMobility(EComponentMobility::Movable);
 	}
 }
-/*
-void ABuilder::SetData(FST_Structure& Data)
-{
-	StructureBaseData = Data;
-
-	//https://docs.unrealengine.com/latest/INT/Programming/Assets/ReferencingAssets/
-
-	UStaticMesh* PreviewMesh = LoadMesh(StructureBaseData.PreviewMesh);
-	if (PreviewMesh)
-	{
-		Mesh->SetStaticMesh(PreviewMesh);
-	}
-	else if (DefaultMesh)
-	{
-		Mesh->SetStaticMesh(DefaultMesh);
-	}
-}
-*/
 
 UStaticMesh* ABuilder::LoadMesh(TAssetPtr<UStaticMesh> MeshAssetID)
 {
@@ -82,6 +65,23 @@ int32 ABuilder::Rotate(int32 Direction, UTile * Tile)
 	}
 	UpdateTiles();
 	return Rotation;
+}
+
+void ABuilder::SetData(FST_Structure& _Data)
+{
+	Data = _Data;
+
+	//https://docs.unrealengine.com/latest/INT/Programming/Assets/ReferencingAssets/
+
+	UStaticMesh* PreviewMesh = LoadMesh(Data.PreviewMesh);
+	if (PreviewMesh)
+	{
+		Mesh->SetStaticMesh(PreviewMesh);
+	}
+	else if (DefaultMesh)
+	{
+		Mesh->SetStaticMesh(DefaultMesh);
+	}
 }
 
 void ABuilder::SetRootTile(UTile* Tile)
@@ -147,6 +147,14 @@ void ABuilder::Hide()
 void ABuilder::Show()
 {
 	SetActorHiddenInGame(false);
+}
+
+bool ABuilder::Stamp()
+{
+	// Spawn clone
+
+
+	return false;
 }
 
 // Called when the game starts or when spawned

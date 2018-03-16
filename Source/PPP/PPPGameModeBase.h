@@ -10,6 +10,7 @@
 //~~~~~ Forward Declarations ~~~~~//
 class UGridManager;
 class ATileManager;
+class ABuilder;
 
 
 UCLASS()
@@ -23,6 +24,8 @@ private:
 	UGridManager* GridManager;
 
 	ATileManager* TileManager;
+
+	ABuilder* Builder;
 
 public:
 
@@ -40,4 +43,7 @@ protected:
 
 	virtual void OnConstruction(const FTransform& Transform) override;
 
+	virtual bool AllowCheats(APlayerController* P) override;
+
+	virtual void InitGame(const FString & MapName, const FString & Options, FString & ErrorMessage) override;
 };

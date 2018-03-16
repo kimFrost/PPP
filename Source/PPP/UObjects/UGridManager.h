@@ -48,7 +48,7 @@ public:
 	void CreateTiles();
 	
 	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Grid")
-	UTile* CoordinatesToTile(int32 X, int32 Y, bool Clamp);
+	UTile* CoordinatesToTile(int32 X, int32 Y, bool Clamp = true);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Grid")
 	UTile* WorldLocationToTile(FVector WorldLocation);

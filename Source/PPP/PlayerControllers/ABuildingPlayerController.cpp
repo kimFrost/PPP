@@ -5,3 +5,10 @@
 
 
 
+void ABuildingPlayerController::Tick(float DeltaTime)
+{
+
+
+
+	Super::Tick(DeltaTime);
+}

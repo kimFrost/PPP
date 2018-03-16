@@ -1,0 +1,63 @@
+[
+	{
+		"Name": "RESOURCE_Apples",
+		"ID": "RESOURCE_Apples",
+		"Title": "Apples",
+		"Price": 10,
+		"Categories": ["CATEGORY_FOOD"],
+		"Containers": ["CONTAINER_Basket", "CONTAINER_Bag", "CONTAINER_Barrel", "CONTAINER_Crate", "CONTAINER_Chest"],
+		"Effect": [
+			{
+				"ID": "Food",
+				"Quantity": 5
+			},
+			{
+				"ID": "Population",
+				"XP": 5
+			}
+		]
+	},
+	{
+		"Name": "RESOURCE_Fish",
+		"ID": "RESOURCE_Fish",
+		"Title": "Fish",
+		"Price": 20,
+		"Categories": ["CATEGORY_FOOD"],
+		"Containers": ["CONTAINER_Basket", "CONTAINER_Bag", "CONTAINER_Barrel", "CONTAINER_Crate", "CONTAINER_Chest"],
+		"Effect": [
+			{
+				"ID": "Food",
+				"Quantity": 10
+			}
+		]
+	},
+	{
+		"Name": "RESOURCE_Ale",
+		"ID": "RESOURCE_Ale",
+		"Title": "Ale",
+		"Price": 50,
+		"Categories": ["CATEGORY_Intoxication"],
+		"Containers": ["CONTAINER_Barrel"],
+		"Effect": [
+			{
+				"ID": "STRUCTURE_Tavern",
+				"Quantity": 10
+			}
+		]
+	},
+	{
+		"Name": "RESOURCE_Opium",
+		"ID": "RESOURCE_Opium",
+		"Title": "Opium",
+		"Price": 250,
+		"Illigal": true,
+		"Categories": ["CATEGORY_Intoxication"],
+		"Containers": ["CONTAINER_Basket", "CONTAINER_Bag", "CONTAINER_Barrel", "CONTAINER_Crate", "CONTAINER_Chest"],
+		"Effect": [
+			{
+				"ID": "STRUCTURE_OpiumDen",
+				"Quantity": 35
+			}
+		]
+	}
+]

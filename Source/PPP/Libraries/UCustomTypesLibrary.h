@@ -68,6 +68,41 @@ stats: [
 */
 
 
+/*** FST_Structure ***/
+USTRUCT(BlueprintType)
+struct FST_Structure : public FTableRowBase
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	FST_Structure(
+		FString ID = "",
+		FString Title = "",
+		float Price = 0,
+		int Colums = 1,
+		int Rows = 1)
+		: ID(ID)
+		, Title(Title)
+		, Price(Price)
+		, Colums(Colums)
+		, Rows(Rows)
+	{}
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
+	FString ID;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
+	FString Title;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
+	float Price;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
+	int Colums;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
+	int Rows;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
+	TSubclassOf<AActor> StructureClass;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Structure")
+	TAssetPtr<UStaticMesh> PreviewMesh;
+};
+
+
 UCLASS()
 class PPP_API UCustomTypesLibrary : public UBlueprintFunctionLibrary
 {

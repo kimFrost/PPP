@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Engine/StreamableManager.h"
+#include "Libraries/UCustomTypesLibrary.h"
 #include "ABuilder.generated.h"
 
 
@@ -37,7 +38,7 @@ private:
 	TArray<UTile*> TilesOn;
 	int32 Rotation;
 	bool bIsBuildValid;
-	//FST_Structure Data;
+	FST_Structure Data;
 
 
 private:
@@ -49,8 +50,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Builder")
 	int32 Rotate(int32 Direction, UTile* Tile);
 	 
-	//UFUNCTION(BlueprintCallable, Category = "Builder")
-	//void SetData(FST_Structure& Data);
+	UFUNCTION(BlueprintCallable, Category = "Builder")
+	void SetData(FST_Structure& _Data);
 
 	void SetRootTile(UTile* Tile);
 
@@ -63,9 +64,7 @@ public:
 	void Hide();
 	void Show();
 
-
-
-	//bool Stamp(); // Stamp a copy of the builder
+	bool Stamp(); // Stamp a copy of the builder
 
 	//Set builder class
 
