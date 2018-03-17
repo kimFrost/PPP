@@ -43,6 +43,8 @@ public:
 	class UInstancedStaticMeshComponent* HISMComp;
 
 	void CreateBlocks();
+	//void UpdateBlock();
+	void UpdateBlocks();
 
 protected:
 	// Called when the game starts or when spawned

@@ -2,10 +2,14 @@
 
 #include "ABuilder.h"
 #include "Engine/StreamableManager.h"
+#include "Kismet/GameplayStatics.h"
 #include "Components/ArrowComponent.h"
+#include "Components/StaticMeshComponent.h"
 #include "Libraries/UCustomTypesLibrary.h"
 #include "Libraries/UGridLibrary.h"
 #include "UObjects/UTile.h"
+#include "UObjects/UGridManager.h"
+#include "AActors/AStructure.h"
 
 
 // Sets default values
@@ -21,9 +25,13 @@ ABuilder::ABuilder()
 	SetRootComponent(RootScene);
 
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
-	Mesh->SetupAttachment(RootComponent);
-	Mesh->SetCastShadow(false);
-	Mesh->SetMobility(EComponentMobility::Movable);
+	if (Mesh)
+	{
+		Mesh->SetupAttachment(RootComponent);
+		Mesh->SetCastShadow(false);
+		Mesh->SetMobility(EComponentMobility::Movable);
+	}
+	
 	/*
 	static ConstructorHelpers::FObjectFinder<UStaticMesh>BaseMeshObj(TEXT("StaticMesh'/Game/Meshes/SM_HexCylinder.SM_HexCylinder'"));
 	if (BaseMeshObj.Succeeded())
@@ -57,8 +65,21 @@ UStaticMesh* ABuilder::LoadMesh(TAssetPtr<UStaticMesh> MeshAssetID)
 
 int32 ABuilder::Rotate(int32 Direction, UTile * Tile)
 {
-	Rotation = (Rotation + 1) % 6;
-	SetActorRotation(FRotator(0, Rotation * (360 / 6), 0));
+	Rotation = (Rotation + Direction) % 4;
+	//SetActorRotation(FRotator(0, Rotation * (360 / 4), 0));
+	SetActorRotation(UGridLibrary::DirectionToRotation(Rotation));
+	if (Tile)
+	{
+		SetRootTile(Tile);
+	}
+	UpdateTiles();
+	return Rotation;
+}
+
+int32 ABuilder::SetRotation(int32 Direction, UTile* Tile)
+{
+	Rotation = (Rotation + Direction) % 4;
+	SetActorRotation(UGridLibrary::DirectionToRotation(Direction));
 	if (Tile)
 	{
 		SetRootTile(Tile);
@@ -114,7 +135,23 @@ void ABuilder::UpdateTiles()
 	}
 	*/
 
-	// Get all tiles on
+	//~~ Get all tiles on ~~//
+	TilesOn.Empty();
+	if (GridManager && RootTile)
+	{
+		for (int32 Y = 0; Y < Data.Rows; Y++)
+		{
+			for (int32 X = 0; X < Data.Colums; X++)
+			{
+				UTile* Tile = GridManager->CoordinatesToTile(RootTile->X + X, RootTile->Y + Y);
+				if (Tile)
+				{
+					TilesOn.Add(Tile);
+				}
+			}
+		}
+	}
+
 	/*
 	TilesOn.Empty();
 	for (int32 i = 0; i < StructureBaseData.CubeSizes.Num(); i++)
@@ -149,12 +186,32 @@ void ABuilder::Show()
 	SetActorHiddenInGame(false);
 }
 
-bool ABuilder::Stamp()
+AStructure* ABuilder::Stamp()
 {
 	// Spawn clone
-
-
-	return false;
+	UWorld* World = GetWorld();
+	if (World)
+	{
+		//FActorSpawnParameters SpawnInfo;
+		//SpawnInfo.Instigator = Instigator;
+		//SpawnInfo.ObjectFlags |= RF_Transient;
+		//SpawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+		FTransform Transform = FTransform(GetActorRotation(), GetActorLocation());
+		AStructure* Structure = World->SpawnActorDeferred<AStructure>(Data.StructureClass, Transform, nullptr, Instigator, ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
+		if (Structure)
+		{
+			for (auto& Tile : TilesOn)
+			{
+				if (Tile)
+				{
+					Tile->StructureOnTile = Structure;
+				}
+			}
+			UGameplayStatics::FinishSpawningActor(Structure, Transform);
+			return Structure;
+		}
+	}
+	return nullptr;
 }
 
 // Called when the game starts or when spawned

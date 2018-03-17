@@ -12,6 +12,8 @@
 //~~~~~ Forward Declarations ~~~~~//
 class UArrowComponent;
 class UTile;
+class AStructure;
+class UGridManager;
 
 
 UCLASS()
@@ -29,6 +31,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Builder")
 	UArrowComponent* Arrow;
 
+	UGridManager* GridManager;
+
 private:
 
 	UStaticMeshComponent* Mesh;
@@ -40,7 +44,6 @@ private:
 	bool bIsBuildValid;
 	FST_Structure Data;
 
-
 private:
 
 	UStaticMesh* LoadMesh(TAssetPtr<UStaticMesh> MeshAssetID);
@@ -49,6 +52,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Builder")
 	int32 Rotate(int32 Direction, UTile* Tile);
+
+	UFUNCTION(BlueprintCallable, Category = "Builder")
+	int32 SetRotation(int32 Direction, UTile* Tile);
 	 
 	UFUNCTION(BlueprintCallable, Category = "Builder")
 	void SetData(FST_Structure& _Data);
@@ -64,7 +70,7 @@ public:
 	void Hide();
 	void Show();
 
-	bool Stamp(); // Stamp a copy of the builder
+	AStructure* Stamp();
 
 	//Set builder class
 

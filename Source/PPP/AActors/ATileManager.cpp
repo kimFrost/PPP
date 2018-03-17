@@ -88,6 +88,35 @@ void ATileManager::CreateBlocks()
 	}
 }
 
+void ATileManager::UpdateBlocks()
+{
+	if (HISMComp && GridManager)
+	{
+		for (auto& Tile : GridManager->GridTiles)
+		{
+			if (Tile)
+			{
+				if (Tile->StructureOnTile)
+				{
+					FTransform Transform;
+					if (HISMComp->GetInstanceTransform(Tile->Index, Transform, true))
+					{
+						FVector WorldLocation = Transform.GetLocation();
+						WorldLocation.Z = -50;
+						Transform.SetLocation(WorldLocation);
+						HISMComp->UpdateInstanceTransform(Tile->Index, Transform, true, true, true);
+					}
+					//HISMComp->SelectInstance
+				}
+				else
+				{
+
+				}
+			}
+		}
+	}
+}
+
 void ATileManager::BeginPlay()
 {
 	if (GridManager)

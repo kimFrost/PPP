@@ -13,8 +13,8 @@ UCLASS()
 class PPP_API UGridLibrary : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
-	
-	
+
+public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Util")
 	static FVector DirectionToLocation(int32 Direction);

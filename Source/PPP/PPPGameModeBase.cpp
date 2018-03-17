@@ -32,24 +32,40 @@ void APPPGameModeBase::BeginPlay()
 {
 	Super::BeginPlay();
 
+
+	//~~ Spawn test layout ~~//
+	TMap<FVector, FString> SpawnList = TMap<FVector, FString>();
+	SpawnList.Add(FVector(5, 5, 0), "STRUCTURE_Residence");
+	SpawnList.Add(FVector(10, 5, 1), "STRUCTURE_Residence");
+	SpawnList.Add(FVector(15, 5, 0), "STRUCTURE_Residence");
+	SpawnList.Add(FVector(10, 2, 0), "Road");
+	SpawnList.Add(FVector(11, 2, 0), "Road");
+	SpawnList.Add(FVector(12, 2, 0), "Road");
+	SpawnList.Add(FVector(13, 2, 0), "Road");
+	SpawnList.Add(FVector(14, 2, 0), "Road");
+	SpawnList.Add(FVector(15, 2, 0), "Road");
+
 	UPPPGameInstance* GameInstance = Cast<UPPPGameInstance>(GetGameInstance());
 
-	// Spawn test layout
 	if (GridManager && Builder && GameInstance)
 	{
-		UTile* Tile = GridManager->CoordinatesToTile(5, 5);
-		if (Tile)
+		for (auto& Entry : SpawnList)
 		{
-			FST_Structure* Data = GameInstance->GetStructureRowData("STRUCTURE_Residence");
-			if (Data)
+			UTile* Tile = GridManager->CoordinatesToTile(Entry.Key.X, Entry.Key.Y);
+			if (Tile)
 			{
-				Builder->SetRootTile(Tile);
-				Builder->SetData(*Data);
-				Builder->Stamp();
+				FST_Structure* Data = GameInstance->GetStructureRowData(Entry.Value);
+				if (Data)
+				{
+					Builder->SetData(*Data);
+					//Builder->SetRootTile(Tile);
+					Builder->SetRotation(Entry.Key.Z, Tile);
+					Builder->Stamp();
+				}
 			}
 		}
+		TileManager->UpdateBlocks();
 	}
-
 }
 
 void APPPGameModeBase::OnConstruction(const FTransform& Transform)
@@ -91,6 +107,8 @@ void APPPGameModeBase::InitGame(const FString & MapName, const FString & Options
 		*/
 
 		Builder = World->SpawnActor<ABuilder>(ABuilder::StaticClass(), SpawnInfo);
+		Builder->GridManager = GridManager;
+		Builder->Hide();
 	}
 
 	if (TileManager)
