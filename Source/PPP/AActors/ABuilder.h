@@ -16,6 +16,14 @@ class AStructure;
 class UGridManager;
 
 
+UENUM(BlueprintType)
+enum class EBuilderMode : uint8
+{
+	VE_Structure UMETA(DisplayName = "Structure"),
+	VE_Road UMETA(DisplayName = "Road")
+};
+
+
 UCLASS()
 class PPP_API ABuilder : public AActor
 {
@@ -43,6 +51,7 @@ private:
 	int32 Rotation;
 	bool bIsBuildValid;
 	FST_Structure Data;
+	EBuilderMode Mode;
 
 private:
 
@@ -61,6 +70,7 @@ public:
 
 	void SetRootTile(UTile* Tile);
 
+	void SetMode(EBuilderMode NewMode);
 
 	// Sizes as a array of coords 
 

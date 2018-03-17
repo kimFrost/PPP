@@ -96,7 +96,7 @@ void ATileManager::UpdateBlocks()
 		{
 			if (Tile)
 			{
-				if (Tile->StructureOnTile)
+				if (Tile->StructureOnTile || Tile->RoadOnTile)
 				{
 					FTransform Transform;
 					if (HISMComp->GetInstanceTransform(Tile->Index, Transform, true))

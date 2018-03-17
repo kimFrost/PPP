@@ -10,6 +10,7 @@
 #include "UObjects/UTile.h"
 #include "UObjects/UGridManager.h"
 #include "AActors/AStructure.h"
+#include "AActors/ARoad.h"
 
 
 // Sets default values
@@ -116,6 +117,11 @@ void ABuilder::SetRootTile(UTile* Tile)
 	}
 }
 
+void ABuilder::SetMode(EBuilderMode NewMode)
+{
+	Mode = NewMode;
+}
+
 
 void ABuilder::UpdateTiles()
 {
@@ -192,23 +198,39 @@ AStructure* ABuilder::Stamp()
 	UWorld* World = GetWorld();
 	if (World)
 	{
-		//FActorSpawnParameters SpawnInfo;
-		//SpawnInfo.Instigator = Instigator;
-		//SpawnInfo.ObjectFlags |= RF_Transient;
-		//SpawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-		FTransform Transform = FTransform(GetActorRotation(), GetActorLocation());
-		AStructure* Structure = World->SpawnActorDeferred<AStructure>(Data.StructureClass, Transform, nullptr, Instigator, ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
-		if (Structure)
+		if (Mode == EBuilderMode::VE_Structure)
 		{
-			for (auto& Tile : TilesOn)
+			//FActorSpawnParameters SpawnInfo;
+			//SpawnInfo.Instigator = Instigator;
+			//SpawnInfo.ObjectFlags |= RF_Transient;
+			//SpawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+			FTransform Transform = FTransform(GetActorRotation(), GetActorLocation());
+			AStructure* Structure = World->SpawnActorDeferred<AStructure>(Data.StructureClass, Transform, nullptr, Instigator, ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
+			if (Structure)
 			{
-				if (Tile)
+				for (auto& Tile : TilesOn)
 				{
-					Tile->StructureOnTile = Structure;
+					if (Tile)
+					{
+						Tile->StructureOnTile = Structure;
+					}
 				}
+				UGameplayStatics::FinishSpawningActor(Structure, Transform);
+				return Structure;
 			}
-			UGameplayStatics::FinishSpawningActor(Structure, Transform);
-			return Structure;
+		}
+		else if (Mode == EBuilderMode::VE_Road)
+		{
+			FTransform Transform = FTransform(GetActorRotation(), GetActorLocation());
+			ARoad* Road = World->SpawnActorDeferred<ARoad>(ARoad::StaticClass() , Transform, nullptr, Instigator, ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
+			if (Road)
+			{
+				if (RootTile)
+				{
+					RootTile->RoadOnTile = Road;
+				}
+				UGameplayStatics::FinishSpawningActor(Road, Transform);
+			}
 		}
 	}
 	return nullptr;

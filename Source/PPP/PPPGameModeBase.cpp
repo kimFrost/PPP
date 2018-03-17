@@ -34,22 +34,29 @@ void APPPGameModeBase::BeginPlay()
 
 
 	//~~ Spawn test layout ~~//
-	TMap<FVector, FString> SpawnList = TMap<FVector, FString>();
-	SpawnList.Add(FVector(5, 5, 0), "STRUCTURE_Residence");
-	SpawnList.Add(FVector(10, 5, 1), "STRUCTURE_Residence");
-	SpawnList.Add(FVector(15, 5, 0), "STRUCTURE_Residence");
-	SpawnList.Add(FVector(10, 2, 0), "Road");
-	SpawnList.Add(FVector(11, 2, 0), "Road");
-	SpawnList.Add(FVector(12, 2, 0), "Road");
-	SpawnList.Add(FVector(13, 2, 0), "Road");
-	SpawnList.Add(FVector(14, 2, 0), "Road");
-	SpawnList.Add(FVector(15, 2, 0), "Road");
+	TMap<FVector, FString> SpawnStructureList = TMap<FVector, FString>();
+	SpawnStructureList.Add(FVector(5, 5, 0), "STRUCTURE_Residence");
+	SpawnStructureList.Add(FVector(10, 5, 1), "STRUCTURE_Residence");
+	SpawnStructureList.Add(FVector(15, 5, 0), "STRUCTURE_Residence");
+
+	TMap<FVector, FString> SpawnRoadList = TMap<FVector, FString>();
+	SpawnRoadList.Add(FVector(10, 0, 0), "Road");
+	SpawnRoadList.Add(FVector(11, 0, 0), "Road");
+	SpawnRoadList.Add(FVector(10, 1, 0), "Road");
+	SpawnRoadList.Add(FVector(11, 1, 0), "Road");
+	SpawnRoadList.Add(FVector(10, 2, 0), "Road");
+	SpawnRoadList.Add(FVector(11, 2, 0), "Road");
+	SpawnRoadList.Add(FVector(12, 2, 0), "Road");
+	SpawnRoadList.Add(FVector(13, 2, 0), "Road");
+	SpawnRoadList.Add(FVector(14, 2, 0), "Road");
+	SpawnRoadList.Add(FVector(15, 2, 0), "Road");
 
 	UPPPGameInstance* GameInstance = Cast<UPPPGameInstance>(GetGameInstance());
 
 	if (GridManager && Builder && GameInstance)
 	{
-		for (auto& Entry : SpawnList)
+		// Structures
+		for (auto& Entry : SpawnStructureList)
 		{
 			UTile* Tile = GridManager->CoordinatesToTile(Entry.Key.X, Entry.Key.Y);
 			if (Tile)
@@ -64,8 +71,23 @@ void APPPGameModeBase::BeginPlay()
 				}
 			}
 		}
+		// Roads
+		for (auto& Entry : SpawnRoadList)
+		{
+			UTile* Tile = GridManager->CoordinatesToTile(Entry.Key.X, Entry.Key.Y);
+			if (Tile)
+			{
+				Builder->SetRootTile(Tile);
+				Builder->SetMode(EBuilderMode::VE_Road);
+				Builder->Stamp();
+			}
+		}
+
 		TileManager->UpdateBlocks();
 	}
+
+
+
 }
 
 void APPPGameModeBase::OnConstruction(const FTransform& Transform)
