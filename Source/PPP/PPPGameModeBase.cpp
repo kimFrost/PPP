@@ -35,9 +35,10 @@ void APPPGameModeBase::BeginPlay()
 
 	//~~ Spawn test layout ~~//
 	TMap<FVector, FString> SpawnStructureList = TMap<FVector, FString>();
-	SpawnStructureList.Add(FVector(5, 5, 0), "STRUCTURE_Residence");
-	SpawnStructureList.Add(FVector(10, 5, 1), "STRUCTURE_Residence");
-	SpawnStructureList.Add(FVector(15, 5, 0), "STRUCTURE_Residence");
+	SpawnStructureList.Add(FVector(16, 17, 1), "STRUCTURE_Factory");
+	SpawnStructureList.Add(FVector(21, 17, 0), "STRUCTURE_Factory");
+	SpawnStructureList.Add(FVector(16, 11, 1), "STRUCTURE_Residence");
+	SpawnStructureList.Add(FVector(16, 5, 0), "STRUCTURE_Test");
 
 	TMap<FVector, FString> SpawnRoadList = TMap<FVector, FString>();
 	SpawnRoadList.Add(FVector(10, 0, 0), "Road");
@@ -50,6 +51,24 @@ void APPPGameModeBase::BeginPlay()
 	SpawnRoadList.Add(FVector(13, 2, 0), "Road");
 	SpawnRoadList.Add(FVector(14, 2, 0), "Road");
 	SpawnRoadList.Add(FVector(15, 2, 0), "Road");
+	SpawnRoadList.Add(FVector(13, 3, 0), "Road");
+	SpawnRoadList.Add(FVector(13, 4, 0), "Road");
+	SpawnRoadList.Add(FVector(13, 5, 0), "Road");
+	SpawnRoadList.Add(FVector(13, 6, 0), "Road");
+	SpawnRoadList.Add(FVector(13, 7, 0), "Road");
+	SpawnRoadList.Add(FVector(13, 8, 0), "Road");
+	SpawnRoadList.Add(FVector(13, 9, 0), "Road");
+	SpawnRoadList.Add(FVector(13, 10, 0), "Road");
+	SpawnRoadList.Add(FVector(13, 11, 0), "Road");
+	SpawnRoadList.Add(FVector(13, 12, 0), "Road");
+	SpawnRoadList.Add(FVector(13, 13, 0), "Road");
+	SpawnRoadList.Add(FVector(13, 14, 0), "Road");
+	SpawnRoadList.Add(FVector(13, 15, 0), "Road");
+	SpawnRoadList.Add(FVector(13, 16, 0), "Road");
+	SpawnRoadList.Add(FVector(13, 17, 0), "Road");
+	SpawnRoadList.Add(FVector(13, 18, 0), "Road");
+	SpawnRoadList.Add(FVector(13, 19, 0), "Road");
+	SpawnRoadList.Add(FVector(13, 20, 0), "Road");
 
 	UPPPGameInstance* GameInstance = Cast<UPPPGameInstance>(GetGameInstance());
 

@@ -108,10 +108,19 @@ void ABuilder::SetData(FST_Structure& _Data)
 
 void ABuilder::SetRootTile(UTile* Tile)
 {
-	if (Tile)
+	if (Tile && GridManager)
 	{
 		FHitResult HitResult(ForceInit);
-		SetActorLocation(Tile->WorldLocation, false, &HitResult, ETeleportType::TeleportPhysics);
+		FVector WorldLocation = Tile->WorldLocation;
+		if (Data.Colums % 2 == 0)
+		{
+			WorldLocation -= FVector(GridManager->TileSize / 2, 0, 0);
+		}
+		if (Data.Rows % 2 == 0)
+		{
+			WorldLocation -= FVector(0, GridManager->TileSize / 2, 0);
+		}
+		SetActorLocation(WorldLocation, false, &HitResult, ETeleportType::TeleportPhysics);
 		RootTile = Tile;
 		UpdateTiles();
 	}
@@ -141,21 +150,50 @@ void ABuilder::UpdateTiles()
 	}
 	*/
 
+	// Get Most center tile
+	/*
+	if (GridManager)
+	{
+		RootTile = GridManager->WorldLocationToTile(GetActorLocation());
+	}
+	*/
+
+
 	//~~ Get all tiles on ~~//
 	TilesOn.Empty();
 	if (GridManager && RootTile)
 	{
+		if (Rotation % 2 > 0)
+		{
+			GridManager->GetTilesInArea(RootTile->X, RootTile->Y, Data.Rows, Data.Colums, TilesOn);
+		}
+		else
+		{
+			GridManager->GetTilesInArea(RootTile->X, RootTile->Y, Data.Colums, Data.Rows, TilesOn);
+		}
+		/*
 		for (int32 Y = 0; Y < Data.Rows; Y++)
 		{
 			for (int32 X = 0; X < Data.Colums; X++)
 			{
-				UTile* Tile = GridManager->CoordinatesToTile(RootTile->X + X, RootTile->Y + Y);
+				// Maybe X, Y Start at 1 and <=
+				int32 TileX = RootTile->X + X - FMath::FloorToInt(Data.Colums / 2);
+				int32 TileY = RootTile->Y + Y - FMath::FloorToInt(Data.Rows / 2);
+				if (Rotation % 2 > 0)
+				{
+					int32 _TileX = TileX;
+					int32 _TileY = TileY;
+					TileX = _TileY;
+					TileY = _TileX;
+				}
+				UTile* Tile = GridManager->CoordinatesToTile(TileX, TileY);
 				if (Tile)
 				{
 					TilesOn.Add(Tile);
 				}
 			}
 		}
+		*/
 	}
 
 	/*

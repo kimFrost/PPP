@@ -83,8 +83,8 @@ UTile* UGridManager::CoordinatesToTile(int32 X, int32 Y, bool Clamp)
 }
 UTile* UGridManager::WorldLocationToTile(FVector WorldLocation)
 {
-	int32 X = FMath::FloorToInt(WorldLocation.X / TileSize);
-	int32 Y = FMath::FloorToInt(WorldLocation.Y / TileSize);
+	int32 X = FMath::FloorToInt((WorldLocation.X + TileSize / 2) / TileSize);
+	int32 Y = FMath::FloorToInt((WorldLocation.Y + TileSize / 2) / TileSize);
 	return CoordinatesToTile(X, Y);
 }
 void UGridManager::GetTilesInArea(int32 X, int32 Y, int32 sizeX, int32 sizeY, UPARAM(ref) TArray<UTile*>& Tiles)
@@ -93,10 +93,14 @@ void UGridManager::GetTilesInArea(int32 X, int32 Y, int32 sizeX, int32 sizeY, UP
 	{
 		for (int32 _X = 0; _X < sizeX; _X++)
 		{
-			UTile* Tile = CoordinatesToTile(_X + X, _Y + Y);
+			int32 TileX = X + _X - FMath::FloorToInt(sizeX / 2);
+			int32 TileY = Y + _Y - FMath::FloorToInt(sizeY / 2);
+		
+			UTile* Tile = CoordinatesToTile(TileX, TileY);
+			//UTile* Tile = CoordinatesToTile(_X + X, _Y + Y);
 			if (Tile)
 			{
-				Tiles.Add(Tile);
+				Tiles.Add(Tile); 
 			}
 		}
 	}

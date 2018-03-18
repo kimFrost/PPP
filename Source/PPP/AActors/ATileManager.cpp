@@ -20,7 +20,7 @@ ATileManager::ATileManager()
 	//bAllowTickBeforeBeginPlay = true;
 
 	bUpdateTiles = false;
-	bDrawDebugLine = false;
+	bDrawDebugLine = true;
 
 	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("RootComponent"));
 	RootComponent->SetMobility(EComponentMobility::Static);
@@ -123,12 +123,35 @@ void ATileManager::BeginPlay()
 	{
 		//GridManager->CreateTiles();
 		//CreateBlocks();
+		if (bDrawDebugLine)
+		{
+			if (GridManager)
+			{
+				for (auto& Tile : GridManager->GridTiles)
+				{
+					if (Tile)
+					{
+						DrawDebugBox(
+							GetWorld(),
+							Tile->WorldLocation,
+							FVector(GridManager->TileSize / 2, GridManager->TileSize / 2, 0),
+							GetRootComponent()->GetComponentToWorld().GetRotation(),
+							FColor::Red,
+							true,
+							-1.f,
+							0
+						);
+					}
+				}
+			}
+		}
 	}
 	Super::BeginPlay();
 }
 
 void ATileManager::Tick(float DeltaTime)
 {
+	/*
 	if (bDrawDebugLine)
 	{
 		if (GridManager)
@@ -151,6 +174,7 @@ void ATileManager::Tick(float DeltaTime)
 			}
 		}
 	}
+	*/
 	Super::Tick(DeltaTime);
 }
 

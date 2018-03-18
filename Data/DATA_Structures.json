@@ -4,7 +4,7 @@
 		"ID": "STRUCTURE_Factory",
 		"Title": "Factory",
 		"Price": 0,
-		"Colums": 8,
+		"Colums": 6,
 		"Rows": 4,
 		"StructureClass": "Blueprint'/Game/PPP/Blueprint/Actors/BP_Factory.BP_Factory_C'",
 		"PreviewMesh" : "StaticMesh'/Game/PPP/Meshes/Structures/SM_Factory.SM_Factory'"
@@ -17,6 +17,16 @@
 		"Colums": 4,
 		"Rows": 4,
 		"StructureClass": "Blueprint'/Game/PPP/Blueprint/Actors/BP_Residence.BP_Residence_C'",
+		"PreviewMesh" : "StaticMesh'/Game/PPP/Meshes/Structures/SM_Residence.SM_Residence'"
+	},
+	{
+		"Name": "STRUCTURE_Test",
+		"ID": "STRUCTURE_Test",
+		"Title": "Test",
+		"Price": 500,
+		"Colums": 3,
+		"Rows": 3,
+		"StructureClass": "Blueprint'/Game/PPP/Blueprint/Actors/BP_Statue.BP_Statue_C'",
 		"PreviewMesh" : "StaticMesh'/Game/PPP/Meshes/Structures/SM_Residence.SM_Residence'"
 	}
 ]
