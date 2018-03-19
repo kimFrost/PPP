@@ -39,6 +39,7 @@ void UGridManager::CreateTiles()
 				Tile->Y = Y;
 				Tile->WorldLocation = Location;
 				Tile->Manager = this;
+				Tile->TileSize = TileSize;
 				//Tile->AddToRoot(); // Prevent Garbage collection
 				Tile->Index = GridTiles.Add(Tile);
 			}
@@ -83,6 +84,7 @@ UTile* UGridManager::CoordinatesToTile(int32 X, int32 Y, bool Clamp)
 }
 UTile* UGridManager::WorldLocationToTile(FVector WorldLocation)
 {
+	// If on edge between tiles, then rounds up // (25 + 50 / 2) / 50 == 1, not 0
 	int32 X = FMath::FloorToInt((WorldLocation.X + TileSize / 2) / TileSize);
 	int32 Y = FMath::FloorToInt((WorldLocation.Y + TileSize / 2) / TileSize);
 	return CoordinatesToTile(X, Y);

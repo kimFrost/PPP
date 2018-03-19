@@ -31,6 +31,9 @@ public:
 	int32 Index;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Grid")
+	float TileSize;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Grid")
 	FVector WorldLocation;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Grid")
