@@ -26,8 +26,14 @@ public:
 	// Sets default values for this actor's properties
 	AStructure();
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Structure")
+	FST_Structure Data;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Structure")
 	bool bFloodFill;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Structure")
+	UTile* TempRootTile;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Structure")
 	TArray<UTile*> TilesOn;

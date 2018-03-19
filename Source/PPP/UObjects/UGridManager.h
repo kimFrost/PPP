@@ -54,7 +54,7 @@ public:
 	UTile* WorldLocationToTile(FVector WorldLocation);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Grid")
-	void GetTilesInArea(int32 X, int32 Y, int32 sizeX, int32 sizeY, UPARAM(ref) TArray<UTile*>& Tiles);
+	void GetTilesInArea(int32 X, int32 Y, int32 sizeX, int32 sizeY, TArray<UTile*>& Tiles); //UPARAM(ref)
 
 	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Grid")
 	bool AreTilesFree(UPARAM(ref) const TArray<UTile*>& Tiles);

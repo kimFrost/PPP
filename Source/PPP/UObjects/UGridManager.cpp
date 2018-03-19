@@ -89,7 +89,7 @@ UTile* UGridManager::WorldLocationToTile(FVector WorldLocation)
 	int32 Y = FMath::FloorToInt((WorldLocation.Y + TileSize / 2) / TileSize);
 	return CoordinatesToTile(X, Y);
 }
-void UGridManager::GetTilesInArea(int32 X, int32 Y, int32 sizeX, int32 sizeY, UPARAM(ref) TArray<UTile*>& Tiles)
+void UGridManager::GetTilesInArea(int32 X, int32 Y, int32 sizeX, int32 sizeY, TArray<UTile*>& Tiles)
 {
 	for (int32 _Y = 0; _Y < sizeY; _Y++)
 	{

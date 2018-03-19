@@ -35,10 +35,16 @@ void APPPGameModeBase::BeginPlay()
 
 	//~~ Spawn test layout ~~//
 	TMap<FVector, FString> SpawnStructureList = TMap<FVector, FString>();
-	SpawnStructureList.Add(FVector(16, 17, 1), "STRUCTURE_Factory");
-	SpawnStructureList.Add(FVector(21, 17, 0), "STRUCTURE_Factory");
+	SpawnStructureList.Add(FVector(16, 17, 0), "STRUCTURE_Factory");
+	SpawnStructureList.Add(FVector(21, 17, 1), "STRUCTURE_Factory");
 	SpawnStructureList.Add(FVector(16, 11, 1), "STRUCTURE_Residence");
-	SpawnStructureList.Add(FVector(16, 5, 0), "STRUCTURE_Test");
+	SpawnStructureList.Add(FVector(16, 5, 0), "STRUCTURE_Test2x2");
+	SpawnStructureList.Add(FVector(20, 5, 0), "STRUCTURE_Test3x3");
+	SpawnStructureList.Add(FVector(24, 5, 0), "STRUCTURE_Test4x4");
+	SpawnStructureList.Add(FVector(29, 5, 0), "STRUCTURE_Test5x2");
+	SpawnStructureList.Add(FVector(35, 5, 1), "STRUCTURE_Test5x2");
+	SpawnStructureList.Add(FVector(40, 5, 1), "STRUCTURE_Test2x2");
+
 
 	TMap<FVector, FString> SpawnRoadList = TMap<FVector, FString>();
 	SpawnRoadList.Add(FVector(10, 0, 0), "Road");

@@ -4,8 +4,8 @@
 		"ID": "STRUCTURE_Factory",
 		"Title": "Factory",
 		"Price": 0,
-		"Colums": 6,
-		"Rows": 4,
+		"Colums": 4,
+		"Rows": 6,
 		"StructureClass": "Blueprint'/Game/PPP/Blueprint/Actors/BP_Factory.BP_Factory_C'",
 		"PreviewMesh" : "StaticMesh'/Game/PPP/Meshes/Structures/SM_Factory.SM_Factory'"
 	},
@@ -20,12 +20,42 @@
 		"PreviewMesh" : "StaticMesh'/Game/PPP/Meshes/Structures/SM_Residence.SM_Residence'"
 	},
 	{
-		"Name": "STRUCTURE_Test",
-		"ID": "STRUCTURE_Test",
+		"Name": "STRUCTURE_Test2x2",
+		"ID": "STRUCTURE_Test2x2",
+		"Title": "Test",
+		"Price": 500,
+		"Colums": 2,
+		"Rows": 2,
+		"StructureClass": "Blueprint'/Game/PPP/Blueprint/Actors/BP_Statue.BP_Statue_C'",
+		"PreviewMesh" : "StaticMesh'/Game/PPP/Meshes/Structures/SM_Residence.SM_Residence'"
+	},
+	{
+		"Name": "STRUCTURE_Test3x3",
+		"ID": "STRUCTURE_Test3x3",
 		"Title": "Test",
 		"Price": 500,
 		"Colums": 3,
 		"Rows": 3,
+		"StructureClass": "Blueprint'/Game/PPP/Blueprint/Actors/BP_Statue.BP_Statue_C'",
+		"PreviewMesh" : "StaticMesh'/Game/PPP/Meshes/Structures/SM_Residence.SM_Residence'"
+	},
+	{
+		"Name": "STRUCTURE_Test4x4",
+		"ID": "STRUCTURE_Test4x4",
+		"Title": "Test",
+		"Price": 500,
+		"Colums": 4,
+		"Rows": 4,
+		"StructureClass": "Blueprint'/Game/PPP/Blueprint/Actors/BP_Statue.BP_Statue_C'",
+		"PreviewMesh" : "StaticMesh'/Game/PPP/Meshes/Structures/SM_Residence.SM_Residence'"
+	},
+	{
+		"Name": "STRUCTURE_Test5x2",
+		"ID": "STRUCTURE_Test5x2",
+		"Title": "Test",
+		"Price": 500,
+		"Colums": 5,
+		"Rows": 2,
 		"StructureClass": "Blueprint'/Game/PPP/Blueprint/Actors/BP_Statue.BP_Statue_C'",
 		"PreviewMesh" : "StaticMesh'/Game/PPP/Meshes/Structures/SM_Residence.SM_Residence'"
 	}

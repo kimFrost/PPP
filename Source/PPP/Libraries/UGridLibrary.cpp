@@ -21,6 +21,8 @@ FVector UGridLibrary::DirectionToLocation(int32 Direction)
 
 FRotator UGridLibrary::DirectionToRotation(int32 Direction)
 {
+	Direction = (Direction + 1) % TileDirections.Num();
+
 	FVector Location = DirectionToLocation(Direction);
 	return Location.Rotation();
 }

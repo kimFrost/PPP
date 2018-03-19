@@ -64,16 +64,10 @@ UStaticMesh* ABuilder::LoadMesh(TAssetPtr<UStaticMesh> MeshAssetID)
 	return MeshAssetID.Get();
 }
 
-int32 ABuilder::Rotate(int32 Direction, UTile * Tile)
+int32 ABuilder::Rotate(int32 Direction, UTile* Tile)
 {
 	Rotation = (Rotation + Direction) % 4;
-	//SetActorRotation(FRotator(0, Rotation * (360 / 4), 0));
-	SetActorRotation(UGridLibrary::DirectionToRotation(Rotation));
-	if (Tile)
-	{
-		SetRootTile(Tile);
-	}
-	UpdateTiles();
+	SetRotation(Rotation, Tile);
 	return Rotation;
 }
 
@@ -112,13 +106,27 @@ void ABuilder::SetRootTile(UTile* Tile)
 	{
 		FHitResult HitResult(ForceInit);
 		FVector WorldLocation = Tile->WorldLocation;
-		if (Data.Colums % 2 == 0)
+		if (Rotation % 2 > 0)
 		{
-			WorldLocation -= FVector(GridManager->TileSize / 2, 0, 0);
+			if (Data.Rows % 2 == 0)
+			{
+				WorldLocation -= FVector(GridManager->TileSize / 2, 0, 0);
+			}
+			if (Data.Colums % 2 == 0)
+			{
+				WorldLocation -= FVector(0, GridManager->TileSize / 2, 0);
+			}
 		}
-		if (Data.Rows % 2 == 0)
+		else
 		{
-			WorldLocation -= FVector(0, GridManager->TileSize / 2, 0);
+			if (Data.Colums % 2 == 0)
+			{
+				WorldLocation -= FVector(GridManager->TileSize / 2, 0, 0);
+			}
+			if (Data.Rows % 2 == 0)
+			{
+				WorldLocation -= FVector(0, GridManager->TileSize / 2, 0);
+			}
 		}
 		SetActorLocation(WorldLocation, false, &HitResult, ETeleportType::TeleportPhysics);
 		RootTile = Tile;
@@ -253,6 +261,9 @@ AStructure* ABuilder::Stamp()
 						Tile->StructureOnTile = Structure;
 					}
 				}
+				Structure->TilesOn = TilesOn;
+				Structure->Data = Data;
+				Structure->TempRootTile = RootTile;
 				UGameplayStatics::FinishSpawningActor(Structure, Transform);
 				return Structure;
 			}
