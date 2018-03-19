@@ -12,6 +12,7 @@ ARoad::ARoad()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	bShouldUpdate = true;
 	bIsOneWay = false;
 	OneWayDirection = 0;
 }
@@ -42,14 +43,19 @@ bool ARoad::HasEntranceOfClass(TSubclassOf<class AStructure> StructureClass)
 }
 void ARoad::UpdatePaths()
 {
-	Paths.Empty();
-	if (TileOn)
+	if (bShouldUpdate)
 	{
-		for (auto& Tile : TileOn->AdjacentTiles)
+		bShouldUpdate = false;
+		Paths.Empty();
+		if (TileOn)
 		{
-			if (Tile && Tile->RoadOnTile)
+			for (auto& Tile : TileOn->AdjacentTiles)
 			{
-				Paths.Add(Tile->RoadOnTile);
+				if (Tile && Tile->RoadOnTile)
+				{
+					Paths.Add(Tile->RoadOnTile);
+					Tile->RoadOnTile->UpdatePaths();
+				}
 			}
 		}
 	}
@@ -59,6 +65,13 @@ void ARoad::UpdatePaths()
 void ARoad::BeginPlay()
 {
 	Super::BeginPlay();
+	for (auto& Tile : TileOn->AdjacentTiles)
+	{
+		if (Tile && Tile->RoadOnTile)
+		{
+			Tile->RoadOnTile->bShouldUpdate = true;
+		}
+	}
 	UpdatePaths();
 }
 

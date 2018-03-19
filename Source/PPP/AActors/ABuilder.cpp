@@ -276,6 +276,7 @@ AStructure* ABuilder::Stamp()
 			{
 				if (RootTile)
 				{
+					Road->TileOn = RootTile;
 					RootTile->RoadOnTile = Road;
 				}
 				UGameplayStatics::FinishSpawningActor(Road, Transform);

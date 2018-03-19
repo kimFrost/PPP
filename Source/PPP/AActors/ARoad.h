@@ -23,6 +23,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Road")
 	UTile* TileOn;
 
+	bool bShouldUpdate;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Road")
 	bool bIsOneWay;
 	
