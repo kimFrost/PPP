@@ -65,14 +65,17 @@ void ARoad::UpdatePaths()
 void ARoad::BeginPlay()
 {
 	Super::BeginPlay();
-	for (auto& Tile : TileOn->AdjacentTiles)
+	if (TileOn)
 	{
-		if (Tile && Tile->RoadOnTile)
+		for (auto& Tile : TileOn->AdjacentTiles)
 		{
-			Tile->RoadOnTile->bShouldUpdate = true;
+			if (Tile && Tile->RoadOnTile)
+			{
+				Tile->RoadOnTile->bShouldUpdate = true;
+			}
 		}
+		UpdatePaths();
 	}
-	UpdatePaths();
 }
 
 // Called every frame

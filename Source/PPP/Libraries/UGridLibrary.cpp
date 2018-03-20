@@ -26,3 +26,39 @@ FRotator UGridLibrary::DirectionToRotation(int32 Direction)
 	FVector Location = DirectionToLocation(Direction);
 	return Location.Rotation();
 }
+
+FVector2D UGridLibrary::RotateCoord(FVector2D Coord, int32 Rotation)
+{
+	//return Coord.GetRotated(DirectionToRotation(Rotation).Yaw); 
+	Rotation = Rotation % TileDirections.Num();
+
+	//(-3, -1);
+	//(1, -3)
+	//(3, 1)
+	//(-1, 3)
+
+	switch (Rotation)
+	{
+		case 0:
+		{
+			break;
+		}
+		case 1:
+		{
+			//RotatedCube = FVector{ -CubeLocal.Z, -CubeLocal.X, -CubeLocal.Y } + CenterCube;
+			break;
+		}
+		case 2:
+		{
+			//RotatedCube = FVector{ CubeLocal.Y, CubeLocal.Z, CubeLocal.X } + CenterCube;
+			break;
+		}
+		case 3:
+		{
+			//RotatedCube = FVector{ -CubeLocal.X, -CubeLocal.Y, -CubeLocal.Z } + CenterCube;
+			break;
+		}
+	}
+
+	return FVector2D();
+}

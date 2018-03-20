@@ -78,13 +78,15 @@ public:
 		FString ID = "",
 		FString Title = "",
 		float Price = 0,
-		int Colums = 1,
-		int Rows = 1)
+		int32 Colums = 1,
+		int32 Rows = 1,
+		FVector2D EntranceCoord = FVector2D(0, 0))
 		: ID(ID)
 		, Title(Title)
 		, Price(Price)
 		, Colums(Colums)
 		, Rows(Rows)
+		, EntranceCoord(EntranceCoord)
 	{}
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
 	FString ID;
@@ -93,9 +95,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
 	float Price;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
-	int Colums;
+	int32 Colums;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
-	int Rows;
+	int32 Rows;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
+	FVector2D EntranceCoord;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
 	TSubclassOf<AActor> StructureClass;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Structure")

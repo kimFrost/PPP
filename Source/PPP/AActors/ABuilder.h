@@ -47,6 +47,7 @@ private:
 	FStreamableManager AssetLoader;
 
 	UTile* RootTile;
+	UTile* EntranceTile;
 	TArray<UTile*> TilesOn;
 	int32 Rotation;
 	bool bIsBuildValid;

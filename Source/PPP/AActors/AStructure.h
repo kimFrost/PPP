@@ -39,7 +39,7 @@ public:
 	TArray<UTile*> TilesOn;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Structure")
-	UTile* TileEnterance;
+	UTile* TileEntrance;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Structure")
 	UTile* TileExit;

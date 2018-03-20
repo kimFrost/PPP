@@ -204,6 +204,15 @@ void ABuilder::UpdateTiles()
 		*/
 	}
 
+	//~~ Entrance Tile ~~//
+	if (RootTile && GridManager)
+	{
+		FVector2D EntraceCoord = FVector2D(RootTile->X + Data.EntranceCoord.X, RootTile->Y + Data.EntranceCoord.Y);
+		EntraceCoord = UGridLibrary::RotateCoord(EntraceCoord, Rotation);
+		EntranceTile = GridManager->CoordinatesToTile(EntraceCoord.X, EntraceCoord.Y, false);
+		
+	}
+
 	/*
 	TilesOn.Empty();
 	for (int32 i = 0; i < StructureBaseData.CubeSizes.Num(); i++)
@@ -264,6 +273,9 @@ AStructure* ABuilder::Stamp()
 				Structure->TilesOn = TilesOn;
 				Structure->Data = Data;
 				Structure->TempRootTile = RootTile;
+				Structure->TileEntrance = EntranceTile;
+				Structure->TileExit = EntranceTile;
+
 				UGameplayStatics::FinishSpawningActor(Structure, Transform);
 				return Structure;
 			}

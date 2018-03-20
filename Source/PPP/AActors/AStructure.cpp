@@ -47,12 +47,16 @@ void AStructure::PushPayload(const FST_Payload& Payload)
 
 TArray<ARoad*> AStructure::GetRouteToClosetOfClass(int32 MaxRange, TSubclassOf<class AStructure> StructureClass)
 {
+	/*
 	const TArray<FVector> Directions = {
 		FVector(0, -1, 0),
 		FVector(1, 0, 0),
 		FVector(0, 1, 0),
 		FVector(-1, 0, 0)
 	};
+	*/
+
+	//UGridLibrary
 
 	/*
 	struct Frontier
@@ -76,7 +80,7 @@ TArray<ARoad*> AStructure::GetRouteToClosetOfClass(int32 MaxRange, TSubclassOf<c
 			//TileExit->WorldLocation;
 			Frontiers.Add(TArray<ARoad*>{
 				TileExit->RoadOnTile
-			});
+			}); 
 			for (int32 k = 1; k <= MaxRange; k++)
 			{
 				Frontiers.Add(TArray<ARoad*>());
@@ -168,9 +172,9 @@ TArray<ARoad*> AStructure::GetRouteToClosetOfClass(int32 MaxRange, TSubclassOf<c
 
 void AStructure::Init()
 {
-	if (TileEnterance && TileEnterance->RoadOnTile)
+	if (TileEntrance && TileEntrance->RoadOnTile)
 	{
-		TileEnterance->RoadOnTile->AddEntrance(this);
+		TileEntrance->RoadOnTile->AddEntrance(this);
 	}
 	if (TileExit && TileExit->RoadOnTile)
 	{
@@ -194,6 +198,19 @@ void AStructure::BeginPlay()
 			Stats.Add(Stat->ID, Stat);
 		}
 	}
+
+	//EntranceTile
+
+	Init();
+	/*
+	- Set enstrace and exit
+	- Structure->Init()
+	- Delay(2)
+	  - GetRouteToClosetOfClass(20, Factory)
+	- GetRouteToClosetOfClass(20, Factory)
+	- Spawn Worker with current route
+	- BindTo OnDestroyed
+	*/
 
 	//~~ This calleds the blueprint native event BeginPlay in AActor which calls beginplay in blueprint. So needs to be at the bottom ~~//
 	Super::BeginPlay();
