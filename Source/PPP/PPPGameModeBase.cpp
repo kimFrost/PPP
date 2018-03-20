@@ -90,22 +90,6 @@ void APPPGameModeBase::BeginPlay()
 
 	if (GridManager && Builder && GameInstance)
 	{
-		// Structures
-		for (auto& Entry : SpawnStructureList)
-		{
-			UTile* Tile = GridManager->CoordinatesToTile(Entry.Key.X, Entry.Key.Y);
-			if (Tile)
-			{
-				FST_Structure* Data = GameInstance->GetStructureRowData(Entry.Value);
-				if (Data)
-				{
-					Builder->SetData(*Data);
-					//Builder->SetRootTile(Tile);
-					Builder->SetRotation(Entry.Key.Z, Tile);
-					Builder->Stamp();
-				}
-			}
-		}
 		// Roads
 		for (auto& Entry : SpawnRoadList)
 		{
@@ -117,11 +101,26 @@ void APPPGameModeBase::BeginPlay()
 				Builder->Stamp();
 			}
 		}
-
+		// Structures
+		for (auto& Entry : SpawnStructureList)
+		{
+			UTile* Tile = GridManager->CoordinatesToTile(Entry.Key.X, Entry.Key.Y);
+			if (Tile)
+			{
+				FST_Structure* Data = GameInstance->GetStructureRowData(Entry.Value);
+				if (Data)
+				{
+					Builder->SetMode(EBuilderMode::VE_Structure);
+					Builder->SetData(*Data);
+					//Builder->SetRootTile(Tile);
+					Builder->SetRotation(Entry.Key.Z, Tile);
+					Builder->Stamp();
+				}
+			}
+		}
+		
 		TileManager->UpdateBlocks();
 	}
-
-
 
 }
 

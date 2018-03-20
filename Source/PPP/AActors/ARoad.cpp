@@ -15,6 +15,10 @@ ARoad::ARoad()
 	bShouldUpdate = true;
 	bIsOneWay = false;
 	OneWayDirection = 0;
+
+	//Add scene component to get world transform
+	USceneComponent* RootScene = CreateDefaultSubobject<USceneComponent>(TEXT("Scene"));
+	SetRootComponent(RootScene);
 }
 void ARoad::AddEntrance(AStructure* Structure)
 {
