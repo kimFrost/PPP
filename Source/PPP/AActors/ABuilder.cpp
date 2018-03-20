@@ -207,8 +207,9 @@ void ABuilder::UpdateTiles()
 	//~~ Entrance Tile ~~//
 	if (RootTile && GridManager)
 	{
-		FVector2D EntraceCoord = FVector2D(RootTile->X + Data.EntranceCoord.X, RootTile->Y + Data.EntranceCoord.Y);
-		EntraceCoord = UGridLibrary::RotateCoord(EntraceCoord, Rotation);
+		//FVector2D EntraceCoord = FVector2D(RootTile->X + Data.EntranceCoord.X, RootTile->Y + Data.EntranceCoord.Y);
+		FVector2D EntraceCoord = UGridLibrary::RotateCoord(FVector2D(Data.EntranceCoord.X, Data.EntranceCoord.Y), Rotation);
+		EntraceCoord = EntraceCoord + FVector2D(RootTile->X, RootTile->Y);
 		EntranceTile = GridManager->CoordinatesToTile(EntraceCoord.X, EntraceCoord.Y, false);
 		
 	}

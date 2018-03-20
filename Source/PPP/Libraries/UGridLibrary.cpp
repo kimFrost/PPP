@@ -41,24 +41,20 @@ FVector2D UGridLibrary::RotateCoord(FVector2D Coord, int32 Rotation)
 	{
 		case 0:
 		{
-			break;
+			return Coord;
 		}
 		case 1:
 		{
-			//RotatedCube = FVector{ -CubeLocal.Z, -CubeLocal.X, -CubeLocal.Y } + CenterCube;
-			break;
+			return FVector2D{ Coord.Y * -1, Coord.X };
 		}
 		case 2:
 		{
-			//RotatedCube = FVector{ CubeLocal.Y, CubeLocal.Z, CubeLocal.X } + CenterCube;
-			break;
+			return FVector2D{ Coord.X * -1, Coord.Y * -1 };
 		}
 		case 3:
 		{
-			//RotatedCube = FVector{ -CubeLocal.X, -CubeLocal.Y, -CubeLocal.Z } + CenterCube;
-			break;
+			return FVector2D{ Coord.Y, Coord.X * -1 };
 		}
 	}
-
-	return FVector2D();
+	return Coord;
 }
