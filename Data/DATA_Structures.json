@@ -6,7 +6,7 @@
 		"Price": 0,
 		"Colums": 4,
 		"Rows": 6,
-		"EntranceCoord": {"X":-2, "Y":0},
+		"EntranceCoord": {"X":-3, "Y":0},
 		"StructureClass": "Blueprint'/Game/PPP/Blueprint/Actors/BP_Factory.BP_Factory_C'",
 		"PreviewMesh" : "StaticMesh'/Game/PPP/Meshes/Structures/SM_Factory.SM_Factory'"
 	},
@@ -17,7 +17,7 @@
 		"Price": 500,
 		"Colums": 4,
 		"Rows": 4,
-		"EntranceCoord": {"X":-3, "Y":-1},
+		"EntranceCoord": {"X":-2, "Y":-1},
 		"StructureClass": "Blueprint'/Game/PPP/Blueprint/Actors/BP_Residence.BP_Residence_C'",
 		"PreviewMesh" : "StaticMesh'/Game/PPP/Meshes/Structures/SM_Residence.SM_Residence'"
 	},
