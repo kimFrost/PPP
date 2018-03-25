@@ -73,8 +73,8 @@ int32 ABuilder::Rotate(int32 Direction, UTile* Tile)
 
 int32 ABuilder::SetRotation(int32 Direction, UTile* Tile)
 {
-	Rotation = (Rotation + Direction) % 4;
-	SetActorRotation(UGridLibrary::DirectionToRotation(Direction));
+	Rotation = Direction % 4;
+	SetActorRotation(UGridLibrary::DirectionToRotation(Rotation));
 	if (Tile)
 	{
 		SetRootTile(Tile);

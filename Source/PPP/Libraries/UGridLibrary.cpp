@@ -27,6 +27,16 @@ FRotator UGridLibrary::DirectionToRotation(int32 Direction)
 	return Location.Rotation();
 }
 
+int32 UGridLibrary::RotationToDirection(FRotator Rotation)
+{
+	//Rotation.Vector();
+	//return TileDirections
+
+	return int32();
+}
+
+
+
 FVector2D UGridLibrary::RotateCoord(FVector2D Coord, int32 Rotation)
 {
 	//return Coord.GetRotated(DirectionToRotation(Rotation).Yaw); 

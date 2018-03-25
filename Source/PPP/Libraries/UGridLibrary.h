@@ -23,6 +23,9 @@ public:
 	static FRotator DirectionToRotation(int32 Direction);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Util")
+	static int32 RotationToDirection(FRotator Rotation);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Util")
 	static FVector2D RotateCoord(FVector2D Coord, int32 Rotation);
 
 };
