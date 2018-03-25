@@ -26,9 +26,10 @@ private:
 
 	ATileManager* TileManager;
 
-	ABuilder* Builder;
-
 public:
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	ABuilder* Builder;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UGridManager* GetGridManager();

@@ -39,6 +39,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Builder")
 	UArrowComponent* Arrow;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Builder", Meta = (ExposeOnSpawn = true))
 	UGridManager* GridManager;
 
 private:
@@ -67,10 +68,12 @@ public:
 	int32 SetRotation(int32 Direction, UTile* Tile);
 	 
 	UFUNCTION(BlueprintCallable, Category = "Builder")
-	void SetData(FST_Structure& _Data);
+	void SetData(UPARAM(ref) FST_Structure& _Data);
 
+	UFUNCTION(BlueprintCallable, Category = "Builder")
 	void SetRootTile(UTile* Tile);
 
+	UFUNCTION(BlueprintCallable, Category = "Builder")
 	void SetMode(EBuilderMode NewMode);
 
 	// Sizes as a array of coords 
@@ -81,6 +84,7 @@ public:
 	void Hide();
 	void Show();
 
+	UFUNCTION(BlueprintCallable, Category = "Builder")
 	AStructure* Stamp();
 
 	//Set builder class

@@ -44,6 +44,8 @@ public:
 
 	void CreateBlocks();
 	//void UpdateBlock();
+
+	UFUNCTION(BlueprintCallable, Category = "TileManager")
 	void UpdateBlocks();
 
 protected:

@@ -32,9 +32,9 @@ void APPPGameModeBase::BeginPlay()
 {
 	Super::BeginPlay();
 
-
 	//~~ Spawn test layout ~~//
 	TMap<FVector, FString> SpawnStructureList = TMap<FVector, FString>();
+	/*
 	SpawnStructureList.Add(FVector(16, 17, 0), "STRUCTURE_Factory");
 	SpawnStructureList.Add(FVector(10, 6, 3), "STRUCTURE_Residence");
 
@@ -44,9 +44,11 @@ void APPPGameModeBase::BeginPlay()
 	SpawnStructureList.Add(FVector(29, 5, 0), "STRUCTURE_Test5x2");
 	SpawnStructureList.Add(FVector(35, 5, 1), "STRUCTURE_Test5x2");
 	SpawnStructureList.Add(FVector(40, 5, 1), "STRUCTURE_Test2x2");
+	*/
 
 
 	TMap<FVector, FString> SpawnRoadList = TMap<FVector, FString>();
+	/*
 	SpawnRoadList.Add(FVector(10, 0, 0), "Road");
 	SpawnRoadList.Add(FVector(11, 0, 0), "Road");
 	SpawnRoadList.Add(FVector(10, 1, 0), "Road");
@@ -84,7 +86,7 @@ void APPPGameModeBase::BeginPlay()
 	SpawnRoadList.Add(FVector(10, 8, 0), "Road");
 	SpawnRoadList.Add(FVector(11, 8, 0), "Road");
 	SpawnRoadList.Add(FVector(12, 8, 0), "Road");
-
+	*/
 
 	UPPPGameInstance* GameInstance = Cast<UPPPGameInstance>(GetGameInstance());
 
@@ -121,7 +123,6 @@ void APPPGameModeBase::BeginPlay()
 		
 		TileManager->UpdateBlocks();
 	}
-
 }
 
 void APPPGameModeBase::OnConstruction(const FTransform& Transform)
