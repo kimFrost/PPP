@@ -27,6 +27,7 @@ URoadMovementComponent::URoadMovementComponent()
 	MovementSpeedModifier = 1.f;
 	bInRoadNavigation = false;
 	bIsMoving = true;
+	bReverse = false;
 }
 
 

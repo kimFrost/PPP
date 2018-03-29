@@ -47,10 +47,10 @@ ABuilder::ABuilder()
 	{
 		Arrow->SetupAttachment(RootComponent);
 		Arrow->SetHiddenInGame(false);
-		Arrow->ArrowSize = 2.1;
-		Arrow->SetRelativeRotation(FRotator(0, -60.f, 0));
-		Arrow->SetRelativeLocation(FVector(0, 0, 30));
-		//Arrow->SetMobility(EComponentMobility::Movable);
+		Arrow->ArrowSize = 0.5f;
+		Arrow->SetRelativeRotation(FRotator(90, 0.f, 0));
+		Arrow->SetRelativeLocation(FVector(0, 0, 25));
+		Arrow->SetMobility(EComponentMobility::Movable);
 	}
 }
 
@@ -88,7 +88,6 @@ void ABuilder::SetData(FST_Structure& _Data)
 	Data = _Data;
 
 	//https://docs.unrealengine.com/latest/INT/Programming/Assets/ReferencingAssets/
-
 	UStaticMesh* PreviewMesh = LoadMesh(Data.PreviewMesh);
 	if (PreviewMesh)
 	{
@@ -97,6 +96,9 @@ void ABuilder::SetData(FST_Structure& _Data)
 	else if (DefaultMesh)
 	{
 		Mesh->SetStaticMesh(DefaultMesh);
+	}
+	else {
+		Mesh->SetStaticMesh(nullptr);
 	}
 }
 
@@ -136,7 +138,15 @@ void ABuilder::SetRootTile(UTile* Tile)
 
 void ABuilder::SetMode(EBuilderMode NewMode)
 {
-	Mode = NewMode;
+	if (NewMode != Mode)
+	{
+		Mode = NewMode;
+		if (Mode == EBuilderMode::VE_Road)
+		{
+			FST_Structure TempData = FST_Structure();
+			SetData(TempData);
+		}
+	}
 }
 
 
@@ -212,6 +222,12 @@ void ABuilder::UpdateTiles()
 		EntraceCoord = EntraceCoord + FVector2D(RootTile->X, RootTile->Y);
 		EntranceTile = GridManager->CoordinatesToTile(EntraceCoord.X, EntraceCoord.Y, false);
 		
+		//!! Gets wrong tile when rotating !!//
+
+		if (Arrow && EntranceTile)
+		{
+			Arrow->SetWorldLocation(EntranceTile->WorldLocation);
+		}
 	}
 
 	/*

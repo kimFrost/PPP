@@ -42,6 +42,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement", Meta = (ExposeOnSpawn = true))
 	TArray<ARoad*> CurrentRoute;
 
+
 	float MovementSpeed;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
@@ -51,6 +52,7 @@ public:
 
 	bool bInRoadNavigation;
 	bool bIsMoving;
+	bool bReverse;
 
 	int32 CurrentRouteIndex;
 

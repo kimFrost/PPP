@@ -1,0 +1,27 @@
+[
+	{
+		"Name": "STATE_Drunk",
+		"ID": "STATE_Drunk",
+		"Title": "Drunk",
+		"Categories": ["CATEGORY_STATES"],
+		"Effects": [
+			{
+				"Target": "MovementSpeed",
+				"Value": 0.5
+			}
+		]
+	},
+	{
+		"Name": "STATE_Stressed",
+		"ID": "STATE_Stressed",
+		"Title": "Stressed",
+		"Categories": ["CATEGORY_STATES"],
+		"Effects": [
+			{
+				"Target": "MovementSpeed",
+				"Value": 1.25
+			}  
+		]
+	}
+]
+

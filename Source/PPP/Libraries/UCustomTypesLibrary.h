@@ -32,6 +32,14 @@ namespace EPersonMood
 }
 */
 
+UENUM(BlueprintType)
+enum class EPropertyTarget : uint8
+{
+	None UMETA(DisplayName = "None"),
+	MovementSpeed UMETA(DisplayName = "MovementSpeed")
+};
+
+
 
 USTRUCT(BlueprintType)
 struct FST_Payload
@@ -67,6 +75,49 @@ stats: [
 }
 */
 
+/*** FST_Effect ***/
+USTRUCT(BlueprintType)
+struct FST_Effect
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	FST_Effect(
+		EPropertyTarget Target = EPropertyTarget::None,
+		float Value = 1.f)
+		: Target(Target)
+		, Value(Value)
+	{}
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Custom")
+	EPropertyTarget Target;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Custom")
+	float Value;
+};
+
+/*** FST_PersonState ***/
+USTRUCT(BlueprintType)
+struct FST_PersonState : public FTableRowBase
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	FST_PersonState(
+		FString ID = "",
+		FString Title = "",
+		TArray<FString> Categories = TArray<FString>(),
+		TArray<FST_Effect> Effects = TArray<FST_Effect>())
+		: ID(ID)
+		, Title(Title)
+		, Categories(Categories)
+		, Effects(Effects)
+	{}
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
+	FString ID;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
+	FString Title;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
+	TArray<FString> Categories;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
+	TArray<FST_Effect> Effects;
+};
 
 /*** FST_Structure ***/
 USTRUCT(BlueprintType)

@@ -47,6 +47,11 @@ void APerson::PushPayload(const FST_Payload& Payload)
 	{
 
 	}
+
+	// parse stats and states with interaction data table
+
+	// Loop states
+	OnStatesChanged();
 }
 void APerson::GetPayload(FST_Payload & Payload)
 {
@@ -93,6 +98,9 @@ void APerson::BeginPlay()
 	//~~ This calleds the blueprint native event BeginPlay in AActor which calls beginplay in blueprint. So needs to be at the bottom ~~//
 	Super::BeginPlay();
 }
+
+void APerson::OnStatesChanged_Implementation()
+{}
 
 // Called every frame
 void APerson::Tick(float DeltaTime)

@@ -71,6 +71,7 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -88,7 +89,19 @@ public:
 
 	//virtual bool RespondToEntrance(AStructure* Entrance) const;
 	
+
+public:
+
+	//DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnProductionChangedDelegate, const TArray<UResource*>&, TotalProduction);
+	//FOnProductionChangedDelegate OnProductionChangedDelegate;
+
+	UFUNCTION(BlueprintNativeEvent, Category = "Person")
+	void OnStatesChanged();
+
 };
+
+
+
 
 
 //https://answers.unrealengine.com/questions/241909/how-to-overide-blueprintnativeevent-method-from-ba.html

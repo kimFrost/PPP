@@ -81,7 +81,10 @@ public:
 	void UpdateTiles();
 	bool ValidatePlacement();
 
+	UFUNCTION(BlueprintCallable, Category = "Builder")
 	void Hide();
+
+	UFUNCTION(BlueprintCallable, Category = "Builder")
 	void Show();
 
 	UFUNCTION(BlueprintCallable, Category = "Builder")
