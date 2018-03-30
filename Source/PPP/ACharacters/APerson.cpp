@@ -4,6 +4,8 @@
 #include "Libraries/UCustomTypesLibrary.h"
 #include "UObjects/UStat.h"
 #include "AActors/AStructure.h"
+#include "UPPPGameInstance.h"
+#include "UComponents/URoadMovementComponent.h"
 
 
 // Sets default values
@@ -21,6 +23,12 @@ APerson::APerson()
 	SpawnStats.Add("Wellness", 0);
 
 	States.Add("Drunk", false);
+
+	RoadMovementComponent = CreateDefaultSubobject<URoadMovementComponent>(TEXT("Mesh"));
+	if (RoadMovementComponent)
+	{
+		//AddOwnedComponent(RoadMovementComponent);
+	}
 }
 
 void APerson::PushPayload(const FST_Payload& Payload)
@@ -42,13 +50,40 @@ void APerson::PushPayload(const FST_Payload& Payload)
 		{
 			States[PayloadState.Key] = PayloadState.Value;
 		}
+		else
+		{
+			States.Add(PayloadState.Key, PayloadState.Value);
+		}
 	}
 	for (auto& PayloadItem : Payload.Items)
 	{
 
 	}
 
+	float MovementSpeedModifier = 1.f;
 	// parse stats and states with interaction data table
+	UPPPGameInstance* GameInstance = Cast<UPPPGameInstance>(GetGameInstance());
+	if (GameInstance)
+	{
+		for (auto& PayloadState : Payload.States)
+		{
+			if (PayloadState.Value)
+			{
+				FST_PersonState* PersonState = GameInstance->GetPersonStateRowData(PayloadState.Key);
+				if (PersonState)
+				{
+					for (auto& Effect : PersonState->Effects)
+					{
+						MovementSpeedModifier = MovementSpeedModifier * Effect.Value;
+					}
+				}
+			}
+		}
+	}
+	if (RoadMovementComponent)
+	{
+		RoadMovementComponent->MovementSpeedModifier = MovementSpeedModifier;
+	}
 
 	// Loop states
 	OnStatesChanged();
@@ -77,6 +112,7 @@ void APerson::Reset()
 	{
 		State.Value = false;
 	}
+	OnStatesChanged();
 }
 
 // Called when the game starts or when spawned
@@ -93,6 +129,11 @@ void APerson::BeginPlay()
 			Stat->ConsumeMultiplier = SpawnStat.Value;
 			Stats.Add(Stat->ID, Stat);
 		}
+	}
+
+	if (RoadMovementComponent)
+	{
+		RoadMovementComponent->SetRoute(CurrentRoute);
 	}
 
 	//~~ This calleds the blueprint native event BeginPlay in AActor which calls beginplay in blueprint. So needs to be at the bottom ~~//

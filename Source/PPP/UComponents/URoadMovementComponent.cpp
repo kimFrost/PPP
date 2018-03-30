@@ -229,7 +229,7 @@ void URoadMovementComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 
 			const FVector& ForwardVector = UpdatedComponent->GetForwardVector();
 			const FQuat& NewRotationQuat = UpdatedComponent->GetComponentQuat();
-			const FVector& NewDelta = ForwardVector * MovementSpeed * MovementSpeedModifier * DeltaTime; //TODO: Missing using DeltaTime
+			const FVector& NewDelta = ForwardVector * MovementSpeed * MovementSpeedModifier * DeltaTime;
 			//FHitResult* OutHit = nullptr;
 
 			UpdatedComponent->MoveComponent(NewDelta, NewRotationQuat, false, nullptr, EMoveComponentFlags::MOVECOMP_NoFlags, ETeleportType::TeleportPhysics);

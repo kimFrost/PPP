@@ -24,6 +24,9 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Data")
 	UDataTable* DATA_Structures;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Data")
+	UDataTable* DATA_PersonStates;
 	
 private:
 
@@ -33,5 +36,8 @@ private:
 public:
 
 	FST_Structure* GetStructureRowData(FString RowName);
+
+	FST_PersonState* GetPersonStateRowData(FString RowName);
+
 
 };

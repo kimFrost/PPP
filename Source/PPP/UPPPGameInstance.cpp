@@ -26,6 +26,11 @@ void UPPPGameInstance::ReadTables()
 		}
 		*/
 	}
+	UDataTable* PersonStatesTable = (UDataTable*)StaticLoadObject(UDataTable::StaticClass(), nullptr, TEXT("DataTable'/Game/PPP/Data/DATA_PersonStates.DATA_PersonStates'"));
+	if (PersonStatesTable)
+	{
+		DATA_PersonStates = PersonStatesTable;
+	}
 }
 
 FST_Structure* UPPPGameInstance::GetStructureRowData(FString RowName)
@@ -34,6 +39,16 @@ FST_Structure* UPPPGameInstance::GetStructureRowData(FString RowName)
 	{
 		static const FString ContextString(TEXT("GENERAL")); //~~ Key value for each column of values ~~//
 		return DATA_Structures->FindRow<FST_Structure>(*RowName, ContextString);
+	}
+	return nullptr;
+}
+
+FST_PersonState* UPPPGameInstance::GetPersonStateRowData(FString RowName)
+{
+	if (DATA_PersonStates)
+	{
+		static const FString ContextString(TEXT("GENERAL")); //~~ Key value for each column of values ~~//
+		return DATA_PersonStates->FindRow<FST_PersonState>(*RowName, ContextString);
 	}
 	return nullptr;
 }

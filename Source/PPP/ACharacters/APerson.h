@@ -13,6 +13,7 @@ class UGridManager;
 class AStructure;
 class ARoad;
 class UStat;
+class URoadMovementComponent;
 
 
 UCLASS()
@@ -23,6 +24,9 @@ class PPP_API APerson : public APawn
 public:
 	// Sets default values for this character's properties
 	APerson();
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Person")
+	URoadMovementComponent* RoadMovementComponent;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Person", Meta = (ExposeOnSpawn = true))
 	UGridManager* TileManager;
