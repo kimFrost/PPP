@@ -54,6 +54,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Person")
 	TMap<FString, bool> States;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Person")
+	TArray<FST_PersonState> PersonStates;
 
 	// Type: State, Skill, Wound, Item
 	/*

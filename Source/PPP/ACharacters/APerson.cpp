@@ -67,14 +67,27 @@ void APerson::PushPayload(const FST_Payload& Payload)
 	{
 		for (auto& PayloadState : Payload.States)
 		{
-			if (PayloadState.Value)
+			if (PayloadState.Value == true)
 			{
 				FST_PersonState* PersonState = GameInstance->GetPersonStateRowData(PayloadState.Key);
 				if (PersonState)
 				{
+					PersonStates.Add(*PersonState);
 					for (auto& Effect : PersonState->Effects)
 					{
 						MovementSpeedModifier = MovementSpeedModifier * Effect.Value;
+					}
+				}
+			}
+			else
+			{
+				for (int32 i = 0; i < PersonStates.Num(); i++)
+				{
+					FST_PersonState& PersonState = PersonStates[i];
+					if (PersonState.ID == PayloadState.Key)
+					{
+						PersonStates.RemoveAt(i);
+						break;
 					}
 				}
 			}
@@ -84,6 +97,7 @@ void APerson::PushPayload(const FST_Payload& Payload)
 	{
 		RoadMovementComponent->MovementSpeedModifier = MovementSpeedModifier;
 	}
+
 
 	// Loop states
 	OnStatesChanged();
