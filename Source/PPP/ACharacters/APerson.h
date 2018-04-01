@@ -54,6 +54,26 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Person")
 	TMap<FString, bool> States;
 
+
+	// Type: State, Skill, Wound, Item
+	/*
+		States: (only negatives?)
+		- Drunk
+		- Stressed
+		- Supressed
+		- Dirty
+		- Mind controlled ()
+		- Mutated
+
+		Skill:
+		- Strong
+		Item:
+		Wound:
+
+
+	*/
+
+
 	//FST_Payload Payload; // Instead of Stats, States and Items
 
 	// Carrying items/goods
