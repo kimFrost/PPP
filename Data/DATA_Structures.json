@@ -1,5 +1,16 @@
 [
 	{
+		"Name": "STRUCTURE_Dump",
+		"ID": "STRUCTURE_Dump",
+		"Title": "Dump",
+		"Price": 0,
+		"Colums": 4,
+		"Rows": 4,
+		"EntranceCoord": {"X":-3, "Y":0},
+		"StructureClass": "Blueprint'/Game/PPP/Blueprint/Actors/BP_Dump.BP_Dump_C'",
+		"PreviewMesh" : "StaticMesh'/Game/PPP/Meshes/Structures/SM_Factory.SM_Factory'"
+	},
+	{
 		"Name": "STRUCTURE_Factory",
 		"ID": "STRUCTURE_Factory",
 		"Title": "Factory",
