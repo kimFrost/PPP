@@ -8,7 +8,7 @@
 		"Rows": 4,
 		"EntranceCoord": {"X":-3, "Y":0},
 		"StructureClass": "Blueprint'/Game/PPP/Blueprint/Actors/BP_Dump.BP_Dump_C'",
-		"PreviewMesh" : "StaticMesh'/Game/PPP/Meshes/Structures/SM_Factory.SM_Factory'"
+		"PreviewMesh" : "StaticMesh'/Game/PPP/Meshes/Structures/SM_DumpPile.SM_DumpPile'"
 	},
 	{
 		"Name": "STRUCTURE_Factory",
