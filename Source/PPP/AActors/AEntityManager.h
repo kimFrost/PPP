@@ -9,6 +9,8 @@
 
 
 //~~~~~ Forward Declarations ~~~~~//
+class UHierarchicalInstancedStaticMeshComponent;
+class UInstancedStaticMeshComponent;
 
 
 
@@ -23,6 +25,17 @@ public:
 
 	
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TileSpawner")
+	UStaticMesh* MeshType;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TileSpawner")
+	UInstancedStaticMeshComponent* ISMComp;
+
+private:
+
+	void SpawnEntity();
+
+	FTimerHandle SpawnEntityTimer;
 
 protected:
 	// Called when the game starts or when spawned
