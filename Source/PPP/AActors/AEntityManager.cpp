@@ -25,7 +25,7 @@ void AEntityManager::SpawnEntity()
 {
 	if (ISMComp)
 	{
-		FRotator Rotation = FRotator(0, 0, FMath::RandRange(0, 360));
+		FRotator Rotation = FRotator(0, FMath::RandRange(0, 360), 0);
 		FVector Location = FVector(0, 0, 0);
 		FTransform Transform = FTransform(Rotation, Location);
 		int32 Index = ISMComp->AddInstance(Transform);
@@ -41,7 +41,7 @@ void AEntityManager::BeginPlay()
 	ISMComp->SetFlags(RF_Transactional);
 	AddInstanceComponent(ISMComp);
 
-	GetWorld()->GetTimerManager().SetTimer(SpawnEntityTimer, this, &AEntityManager::SpawnEntity, 0.2f, true);
+	GetWorld()->GetTimerManager().SetTimer(SpawnEntityTimer, this, &AEntityManager::SpawnEntity, 0.005f, true);
 
 	/*
 	if (ISMComp)
@@ -71,7 +71,7 @@ void AEntityManager::Tick(float DeltaTime)
 			{
 				FVector WorldLocation = Transform.GetLocation();
 				FVector Direction = Transform.GetRotation().Vector();
-				Transform.SetLocation(WorldLocation + (Direction * 10));
+				Transform.SetLocation(WorldLocation + (Direction * 5) + FVector(0, 0, WorldLocation.Z * 0.05 + 0.1));
 				ISMComp->UpdateInstanceTransform(i, Transform, true, true, true);
 			}
 		}
