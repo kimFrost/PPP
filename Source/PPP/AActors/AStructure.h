@@ -47,6 +47,10 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Structure")
 	TArray<ARoad*> CurrentRoute;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Structure")
+	TArray<AStructure*> NavigationTargets;
+	// Array of target slots
+
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Structure", Meta = (ExposeOnSpawn = true))
 	TMap<FString, int32> SpawnStats;
