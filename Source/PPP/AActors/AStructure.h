@@ -14,6 +14,7 @@ class UTile;
 class ARoad;
 class APerson;
 class UStat;
+class UAllocationSlot;
 
 
 
@@ -48,8 +49,7 @@ public:
 	TArray<ARoad*> CurrentRoute;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Structure")
-	TArray<AStructure*> NavigationTargets;
-	// Array of target slots
+	TArray<UAllocationSlot*> NavigationTargets;
 
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Structure", Meta = (ExposeOnSpawn = true))
