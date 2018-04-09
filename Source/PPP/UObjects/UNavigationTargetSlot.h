@@ -9,14 +9,14 @@
 
 //~~~~~ Forward Declarations ~~~~~//
 class UNavigationTargetSlot;
-class AActor;
+class AStructure;
 
 
 //~~~~~ Deleagtes ~~~~~//
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FUNavigationTargetSlotOnUnallocation, UNavigationTargetSlot*, AllocationSlot, AActor*, Allocatable);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FUNavigationTargetSlotOnAllocation, UNavigationTargetSlot*, AllocationSlot, AActor*, Allocatable);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FUNavigationTargetSlotOnChange, UNavigationTargetSlot*, AllocationSlot, AActor*, Allocatable);
-DECLARE_DELEGATE_RetVal_TwoParams(AActor*, FUNavigationTargetSlotRequest, UClass*, FString);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FUNavigationTargetSlotOnUnallocation, UNavigationTargetSlot*, AllocationSlot, AStructure*, Allocatable);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FUNavigationTargetSlotOnAllocation, UNavigationTargetSlot*, AllocationSlot, AStructure*, Allocatable);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FUNavigationTargetSlotOnChange, UNavigationTargetSlot*, AllocationSlot, AStructure*, Allocatable);
+//DECLARE_DELEGATE_RetVal_TwoParams(AActor*, FUNavigationTargetSlotRequest, UClass*, FString);
 
 
 UCLASS(Blueprintable, BlueprintType)
@@ -33,21 +33,21 @@ public:
 	FString AllowedAllocationID;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Allocation")
-	UObject* Allocated;
+	AStructure* Allocated;
 
-	UObject* PrevAllocated;
+	AStructure* PrevAllocated;
 
 public:
 
 	UFUNCTION(BlueprintCallable, Category = "Allocation")
-	void Allocate(UObject* Allocatable);
+	void Allocate(AStructure* Structure);
 	
 	UFUNCTION(BlueprintCallable, Category = "Allocation")
-	void Unallocate(UObject* Allocatable = nullptr);
+	void Unallocate(AStructure* Structure = nullptr);
 
 public:
 
-	FUNavigationTargetSlotRequest OnRequestAllocatable;
+	//FUNavigationTargetSlotRequest OnRequestAllocatable;
 
 	UPROPERTY(BlueprintAssignable, Category = "Allocation|Event")
 	FUNavigationTargetSlotOnUnallocation OnUnallocationDelegate;
