@@ -139,6 +139,10 @@ void APerson::Reset()
 	OnStatesChanged();
 }
 
+void APerson::Kill()
+{
+}
+
 // Called when the game starts or when spawned
 void APerson::BeginPlay()
 {

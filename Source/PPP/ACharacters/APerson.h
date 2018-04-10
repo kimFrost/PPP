@@ -104,6 +104,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Person")
 	void Reset();
 
+	UFUNCTION(BlueprintCallable, Category = "Person")
+	void Kill();
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

@@ -56,6 +56,7 @@ void UNavigationTargetsMovementComponent::ProgressToNextTarget()
 		if (StructureList[CurrentTargetIndex + 1])
 		{
 			SetTarget(StructureList[CurrentTargetIndex + 1]);
+			CurrentTargetIndex++;
 		}
 	}
 	else if (UpdatedPerson->Home)
