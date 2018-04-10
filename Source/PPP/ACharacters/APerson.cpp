@@ -3,9 +3,11 @@
 #include "APerson.h"
 #include "Libraries/UCustomTypesLibrary.h"
 #include "UObjects/UStat.h"
+#include "UObjects/UNavigationTargetSlot.h"
 #include "AActors/AStructure.h"
 #include "UPPPGameInstance.h"
 #include "UComponents/URoadMovementComponent.h"
+#include "UComponents/UNavigationTargetsMovementComponent.h"
 
 
 // Sets default values
@@ -14,6 +16,7 @@ APerson::APerson()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
 
+	Home = nullptr;
 	bHasWorked = false;
 	Mood = EPersonMood::VE_Neutral;
 	Energy = 1;
@@ -24,11 +27,15 @@ APerson::APerson()
 
 	States.Add("Drunk", false);
 
-	RoadMovementComponent = CreateDefaultSubobject<URoadMovementComponent>(TEXT("Mesh"));
+	NavigationTargetsMovementComponent = CreateDefaultSubobject<UNavigationTargetsMovementComponent>(TEXT("NavigationTargetsMovementComponent"));
+
+	/*
+	RoadMovementComponent = CreateDefaultSubobject<URoadMovementComponent>(TEXT("RoadMovementComponent"));
 	if (RoadMovementComponent)
 	{
 		//AddOwnedComponent(RoadMovementComponent);
 	}
+	*/
 }
 
 void APerson::PushPayload(const FST_Payload& Payload)
@@ -97,7 +104,10 @@ void APerson::PushPayload(const FST_Payload& Payload)
 	{
 		RoadMovementComponent->MovementSpeedModifier = MovementSpeedModifier;
 	}
-
+	if (NavigationTargetsMovementComponent)
+	{
+		NavigationTargetsMovementComponent->MovementSpeedModifier = MovementSpeedModifier;
+	}
 
 	// Loop states
 	OnStatesChanged();
@@ -148,6 +158,10 @@ void APerson::BeginPlay()
 	if (RoadMovementComponent)
 	{
 		RoadMovementComponent->SetRoute(CurrentRoute);
+	}
+	if (NavigationTargetsMovementComponent)
+	{
+		NavigationTargetsMovementComponent->SetTargets(NavigationTargets);
 	}
 
 	//~~ This calleds the blueprint native event BeginPlay in AActor which calls beginplay in blueprint. So needs to be at the bottom ~~//

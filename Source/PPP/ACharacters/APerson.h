@@ -14,6 +14,8 @@ class AStructure;
 class ARoad;
 class UStat;
 class URoadMovementComponent;
+class UNavigationTargetsMovementComponent;
+class UNavigationTargetSlot;
 
 
 UCLASS()
@@ -28,11 +30,20 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Person")
 	URoadMovementComponent* RoadMovementComponent;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Person")
+	UNavigationTargetsMovementComponent* NavigationTargetsMovementComponent;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Person", Meta = (ExposeOnSpawn = true))
 	UGridManager* TileManager;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Person", Meta = (ExposeOnSpawn = true))
 	TArray<ARoad*> CurrentRoute;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement", Meta = (ExposeOnSpawn = true))
+	TArray<UNavigationTargetSlot*> NavigationTargets;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Person", Meta = (ExposeOnSpawn = true))
+	AStructure* Home;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Person")
 	bool bHasWorked;
