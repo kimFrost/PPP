@@ -119,6 +119,7 @@ void UNavigationTargetsMovementComponent::TickComponent(float DeltaTime, ELevelT
 			if (Target && UpdatedPerson)
 			{
 				Target->Interact(UpdatedPerson);
+				//Target->Enter(UpdatedPerson)
 				ProgressToNextTarget();
 			}
 		}
