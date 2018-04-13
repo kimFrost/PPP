@@ -120,6 +120,8 @@ void UNavigationTargetsMovementComponent::TickComponent(float DeltaTime, ELevelT
 			{
 				Target->Interact(UpdatedPerson);
 				//Target->Enter(UpdatedPerson)
+				GetWorld()->GetTimerManager().SetTimer(WaitTimerHandle, this, &UNavigationTargetsMovementComponent::ProgressToNextTarget, 5.f, false);
+
 				ProgressToNextTarget();
 			}
 		}

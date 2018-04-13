@@ -37,6 +37,7 @@ public:
 
 	TArray<AStructure*> StructureList;
 
+	FTimerHandle WaitTimerHandle;
 
 	float MovementSpeed;
 
