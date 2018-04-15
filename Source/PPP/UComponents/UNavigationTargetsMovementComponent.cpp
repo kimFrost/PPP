@@ -29,6 +29,7 @@ void UNavigationTargetsMovementComponent::SetTarget(AStructure* NewTarget)
 	if (Target)
 	{
 		TargetLocation = Target->GetActorLocation();
+		bIsMoving = true;
 	}
 }
 void UNavigationTargetsMovementComponent::SetTargets(TArray<UNavigationTargetSlot*> NewTargets)
@@ -107,11 +108,9 @@ void UNavigationTargetsMovementComponent::TickComponent(float DeltaTime, ELevelT
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	if (UpdatedComponent)
+	if (UpdatedComponent && bIsMoving)
 	{
 		FVector ComponentLocation = UpdatedComponent->GetComponentLocation();
-
-		bIsMoving = true;
 
 		//~~ Within frame distance of TargetLocation ~~//
 		if ((TargetLocation - ComponentLocation).Size() < MovementSpeed * MovementSpeedModifier * DeltaTime)
@@ -121,8 +120,8 @@ void UNavigationTargetsMovementComponent::TickComponent(float DeltaTime, ELevelT
 				Target->Interact(UpdatedPerson);
 				//Target->Enter(UpdatedPerson)
 				GetWorld()->GetTimerManager().SetTimer(WaitTimerHandle, this, &UNavigationTargetsMovementComponent::ProgressToNextTarget, 5.f, false);
-
-				ProgressToNextTarget();
+				bIsMoving = false;
+				//ProgressToNextTarget();
 			}
 		}
 

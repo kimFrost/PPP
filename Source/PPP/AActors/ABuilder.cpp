@@ -11,6 +11,7 @@
 #include "UObjects/UGridManager.h"
 #include "AActors/AStructure.h"
 #include "AActors/ARoad.h"
+#include "PPPGameModeBase.h"
 
 
 // Sets default values
@@ -264,8 +265,9 @@ void ABuilder::Show()
 	SetActorHiddenInGame(false);
 }
 
-AStructure* ABuilder::Stamp()
+AStructure* ABuilder::Stamp(FString _WorldID)
 {
+	
 	// Spawn clone
 	UWorld* World = GetWorld();
 	if (World)
@@ -287,6 +289,24 @@ AStructure* ABuilder::Stamp()
 						Tile->StructureOnTile = Structure;
 					}
 				}
+				if (_WorldID.IsEmpty())
+				{
+					APPPGameModeBase* GameMode = Cast<APPPGameModeBase>(GetWorld()->GetAuthGameMode());
+					if (GameMode)
+					{
+						_WorldID = GameMode->GenerateWorldID(Structure);
+					}
+				}
+				else
+				{
+					APPPGameModeBase* GameMode = Cast<APPPGameModeBase>(GetWorld()->GetAuthGameMode());
+					if (GameMode)
+					{
+						GameMode->RegisterWorldID(Structure, _WorldID);
+					}
+				}
+				Structure->WorldID = _WorldID;
+				Structure->SetActorLabel(_WorldID);
 				Structure->TilesOn = TilesOn;
 				Structure->Data = Data;
 				Structure->TempRootTile = RootTile;

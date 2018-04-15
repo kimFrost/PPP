@@ -28,6 +28,37 @@ ATileManager* APPPGameModeBase::GetTileManager()
 	return TileManager;
 }
 
+FString APPPGameModeBase::GenerateWorldID(AActor* Actor)
+{
+	// const FGuid& GUID
+	FString NewID;
+	if (Actor)
+	{
+		//RegisterWorldID(Actor);
+		NewID = Actor->GetActorLabel();
+		//RegisteredWorldActors.Add(NewID, Actor);
+		RegisterWorldID(Actor, NewID);
+		//GetActorLabel
+		//SetActorLabel
+		//Actor->GetUniqueID();
+	}
+	return NewID;
+}
+
+void APPPGameModeBase::RegisterWorldID(AActor* Actor, FString WorldID)
+{
+	RegisteredWorldActors.Add(WorldID, Actor);
+}
+
+AActor* APPPGameModeBase::GetActorFromWorldID(FString WorldID)
+{
+	if (RegisteredWorldActors.Contains(WorldID))
+	{
+		return RegisteredWorldActors[WorldID];
+	}
+	return nullptr;
+}
+
 void APPPGameModeBase::BeginPlay()
 {
 	Super::BeginPlay();
@@ -170,7 +201,7 @@ void APPPGameModeBase::InitGame(const FString & MapName, const FString & Options
 
 	if (TileManager)
 	{
-		TileManager->CreateBlocks();
+		//TileManager->CreateBlocks();
 	}
 	
 }

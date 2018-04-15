@@ -88,7 +88,7 @@ public:
 	void Show();
 
 	UFUNCTION(BlueprintCallable, Category = "Builder")
-	AStructure* Stamp();
+	AStructure* Stamp(FString _WorldID = "");
 
 	//Set builder class
 

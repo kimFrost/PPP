@@ -30,6 +30,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Structure")
 	FST_Structure Data;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Structure")
+	FString WorldID;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Structure")
 	bool bFloodFill;
 

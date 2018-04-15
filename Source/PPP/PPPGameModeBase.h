@@ -26,6 +26,8 @@ private:
 
 	ATileManager* TileManager;
 
+	TMap<FString, AActor*> RegisteredWorldActors;
+
 public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
@@ -36,6 +38,15 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	ATileManager* GetTileManager();
+
+	UFUNCTION(BlueprintCallable)
+	FString GenerateWorldID(AActor* Actor);
+
+	UFUNCTION(BlueprintCallable)
+	void RegisterWorldID(AActor* Actor, FString WorldID);
+
+	UFUNCTION(BlueprintCallable)
+	AActor* GetActorFromWorldID(FString WorldID);
 
 protected:
 
