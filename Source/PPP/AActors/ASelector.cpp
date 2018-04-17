@@ -3,7 +3,10 @@
 #include "ASelector.h"
 #include "Engine/StreamableManager.h"
 #include "UObjects/UTile.h"
+#include "AActors/AStructure.h"
 #include "Components/StaticMeshComponent.h"
+#include "Runtime/CoreUObject/Public/UObject/ConstructorHelpers.h"
+
 
 // Sets default values
 ASelector::ASelector()
@@ -20,7 +23,14 @@ ASelector::ASelector()
 		Mesh->SetupAttachment(RootComponent);
 		Mesh->SetCastShadow(false);
 		Mesh->SetMobility(EComponentMobility::Movable);
+
+		static ConstructorHelpers::FObjectFinder<UStaticMesh>BaseMeshObj(TEXT("StaticMesh'/Game/PPP/Meshes/Shapes/SM_Block-50.SM_Block-50'"));
+		if (BaseMeshObj.Succeeded())
+		{
+			Mesh->SetStaticMesh(BaseMeshObj.Object);
+		}
 	}
+
 }
 
 UStaticMesh* ASelector::LoadMesh(TAssetPtr<UStaticMesh> MeshAssetID)
@@ -39,6 +49,10 @@ void ASelector::SetTileOn(UTile* Tile)
 	{
 		SetActorLocation(Tile->WorldLocation);
 		TileOn = Tile;
+		if (TileOn->StructureOnTile)
+		{
+			SetSize(TileOn->StructureOnTile->Data.Colums, TileOn->StructureOnTile->Data.Rows);
+		}
 	}
 }
 
