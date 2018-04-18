@@ -29,6 +29,13 @@ ASelector::ASelector()
 		{
 			Mesh->SetStaticMesh(BaseMeshObj.Object);
 		}
+
+		static ConstructorHelpers::FObjectFinder<UMaterial>MaterialObj(TEXT("/Game/PPP/Materials/M_Selector.M_Selector"));
+		if (MaterialObj.Succeeded())
+		{
+			DynamicMaterial = UMaterialInstanceDynamic::Create(MaterialObj.Object, Mesh);
+			Mesh->SetMaterial(0, DynamicMaterial);
+		}
 	}
 
 }
@@ -47,11 +54,16 @@ void ASelector::SetTileOn(UTile* Tile)
 {
 	if (Tile)
 	{
-		SetActorLocation(Tile->WorldLocation);
 		TileOn = Tile;
 		if (TileOn->StructureOnTile)
 		{
 			SetSize(TileOn->StructureOnTile->Data.Colums, TileOn->StructureOnTile->Data.Rows);
+			SetActorLocation(TileOn->StructureOnTile->GetActorLocation());
+		}
+		else
+		{
+			SetSize(1, 1);
+			SetActorLocation(Tile->WorldLocation);
 		}
 	}
 }

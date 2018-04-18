@@ -28,6 +28,7 @@ public:
 private:
 
 	UStaticMeshComponent* Mesh;
+	UMaterialInstanceDynamic* DynamicMaterial;
 	FStreamableManager AssetLoader;
 	UTile* TileOn;
 
