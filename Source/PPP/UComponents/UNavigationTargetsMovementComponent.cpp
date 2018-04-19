@@ -16,7 +16,7 @@ UNavigationTargetsMovementComponent::UNavigationTargetsMovementComponent()
 
 	bWantsInitializeComponent = true;
 
-	MovementSpeed = 100.f;
+	MovementSpeed = 50.f;
 	MovementSpeedModifier = 1.f;
 	bIsMoving = true;
 }
