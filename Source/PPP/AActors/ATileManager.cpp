@@ -129,7 +129,7 @@ void ATileManager::BeginPlay()
 			{
 				for (auto& Tile : GridManager->GridTiles)
 				{
-					if (Tile)
+					if (Tile && Tile->bHasSurface)
 					{
 						DrawDebugBox(
 							GetWorld(),
@@ -189,7 +189,7 @@ void ATileManager::OnConstruction(const FTransform& Transform)
 		bUpdateTiles = false;
 		if (GridManager)
 		{
-			GridManager->CreateTiles();
+			GridManager->CreateTiles(GetWorld());
 			//CreateBlocks();
 		}
 	}

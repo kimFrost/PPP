@@ -13,6 +13,7 @@ UTile::UTile()
 	AdjacentTiles = TArray<UTile*>();
 	RoadOnTile = nullptr;
 	StructureOnTile = nullptr;
+	bHasSurface = false;
 }
 
 UTile::~UTile()

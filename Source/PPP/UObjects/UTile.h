@@ -37,6 +37,9 @@ public:
 	FVector WorldLocation;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Grid")
+	bool bHasSurface;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Grid")
 	UGridManager* Manager;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Grid")

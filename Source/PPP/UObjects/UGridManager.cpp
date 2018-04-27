@@ -1,8 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "UGridManager.h"
+#include "CollisionQueryParams.h"
 #include "UObjects/UTile.h"
 #include "Libraries/UGridLibrary.h"
+#include "DrawDebugHelpers.h"
 
 
 const TArray<FVector> TileDirections = {
@@ -23,7 +25,7 @@ UGridManager::UGridManager()
 UGridManager::~UGridManager()
 {}
 
-void UGridManager::CreateTiles()
+void UGridManager::CreateTiles(UWorld* World)
 {
 	GridTiles.Empty();
 
@@ -65,6 +67,41 @@ void UGridManager::CreateTiles()
 		}
 	}
 
+	/*
+	// Intersection 
+	FVector Normal = FVector(0, 0, 1);
+	FPlane Plane = FPlane(Normal, Normal);
+	FVector IntersectionLocation = FMath::LinePlaneIntersection(LineTraceFrom, LineTraceTo, FVector::ZeroVector, Normal);
+	Hex = LocationToHex(IntersectionLocation);
+	*/
+
+	//~~ Line trace in world ~~//
+	FCollisionQueryParams RV_TraceParams = FCollisionQueryParams(FName(TEXT("RV_Trace")));
+	RV_TraceParams.bTraceComplex = false;
+	RV_TraceParams.bTraceAsyncScene = false;
+	ECollisionChannel CollisionChannel = ECC_Visibility;
+	FHitResult RV_Hit(1.f);
+
+	for (auto& Tile : GridTiles)
+	{
+		if (Tile && World)
+		{
+			const float TraceDist = 1000.f;
+			const FVector LineTraceStart = Tile->WorldLocation + FVector(0, 0, TraceDist / 2);
+			const FVector LineTraceEnd = LineTraceStart - FVector(0, 0, TraceDist);
+
+			//const FName TraceTag("RV_Trace");
+			//GetWorld()->DebugDrawTraceTag = TraceTag;
+			//RV_TraceParams.TraceTag = TraceTag;
+
+			World->LineTraceSingleByChannel(RV_Hit, LineTraceStart, LineTraceEnd, CollisionChannel, RV_TraceParams);
+			if (RV_Hit.bBlockingHit)
+			{
+				Tile->bHasSurface = true;
+				Tile->WorldLocation.Z = RV_Hit.Location.Z;
+			}
+		}
+	}
 }
 UTile* UGridManager::CoordinatesToTile(int32 X, int32 Y, bool Clamp)
 {

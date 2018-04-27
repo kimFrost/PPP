@@ -171,15 +171,15 @@ void APPPGameModeBase::InitGame(const FString & MapName, const FString & Options
 {
 	Super::InitGame(MapName, Options, ErrorMessage);
 
-	GridManager = NewObject<UGridManager>();
-	if (GridManager)
-	{
-		GridManager->CreateTiles();
-	}
-
 	UWorld* World = GetWorld();
 	if (World)
 	{
+		GridManager = NewObject<UGridManager>();
+		if (GridManager)
+		{
+			GridManager->CreateTiles(World);
+		}
+
 		FActorSpawnParameters SpawnInfo;
 		SpawnInfo.Instigator = Instigator;
 		SpawnInfo.ObjectFlags |= RF_Transient;
