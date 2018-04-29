@@ -19,7 +19,13 @@
 		"Effects": [
 			{
 				"Target": "MovementSpeed",
+				"Operator": "Multiply",
 				"Value": 1.25
+			},
+			{
+				"Target": "Production",
+				"Operator": "Addition",
+				"Value": 0.25
 			}  
 		]
 	}
