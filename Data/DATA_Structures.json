@@ -44,6 +44,17 @@
 		"PreviewMesh" : "StaticMesh'/Game/PPP/Meshes/Structures/SM_Pub.SM_Pub'"
 	},
 	{
+		"Name": "STRUCTURE_Clinic",
+		"ID": "STRUCTURE_Clinic",
+		"Title": "Clinic",
+		"Price": 500,
+		"Colums": 4,
+		"Rows": 4,
+		"EntranceCoord": {"X":-3, "Y":-1},
+		"StructureClass": "Blueprint'/Game/PPP/Blueprint/Actors/BP_Clinic.BP_Clinic_C'",
+		"PreviewMesh" : "StaticMesh'/Game/PPP/Meshes/Structures/SM_Pub.SM_Pub'"
+	},
+	{
 		"Name": "STRUCTURE_Test2x2",
 		"ID": "STRUCTURE_Test2x2",
 		"Title": "Test",

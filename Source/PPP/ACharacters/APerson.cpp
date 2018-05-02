@@ -21,6 +21,8 @@ APerson::APerson()
 	Mood = EPersonMood::VE_Neutral;
 	Energy = 1;
 
+	SpawnStats.Add("Health", 5);
+
 	SpawnStats.Add("Stress", 0);
 	SpawnStats.Add("Money", 0);
 	SpawnStats.Add("Wellness", 0);

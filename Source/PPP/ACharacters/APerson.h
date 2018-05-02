@@ -13,6 +13,7 @@ class UGridManager;
 class AStructure;
 class ARoad;
 class UStat;
+class USkill;
 class URoadMovementComponent;
 class UNavigationTargetsMovementComponent;
 class UNavigationTargetSlot;
@@ -61,6 +62,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Person")
 	TMap<FString, UStat*> Stats;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Person")
+	TMap<FString, USkill*> Skills;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Person")
 	TMap<FString, bool> States;
